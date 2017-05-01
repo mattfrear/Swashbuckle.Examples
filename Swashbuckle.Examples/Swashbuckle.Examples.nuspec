@@ -3,7 +3,7 @@
   <metadata>
     <id>Swashbuckle.Examples</id>
     <version>$version$</version>
-    <title>Swashbuckle.Examples - SwaggerRequestExample and SwaggerResponseExample</title>
+    <title>Swashbuckle.Examples</title>
     <authors>Matt Frear</authors>
     <licenseUrl>http://opensource.org/licenses/BSD-3-Clause</licenseUrl>
     <projectUrl>https://github.com/mattfrear/Swashbuckle.Examples</projectUrl>
