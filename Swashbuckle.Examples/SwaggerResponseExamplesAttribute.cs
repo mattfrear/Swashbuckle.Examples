@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 
 namespace Swashbuckle.Examples
 {
@@ -9,14 +10,17 @@ namespace Swashbuckle.Examples
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public sealed class SwaggerResponseExamplesAttribute : Attribute
     {
-        public SwaggerResponseExamplesAttribute(Type responseType, Type examplesProviderType)
+        public SwaggerResponseExamplesAttribute(Type responseType, Type examplesProviderType, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             ResponseType = responseType;
             ExamplesProviderType = examplesProviderType;
+            StatusCode = statusCode;
         }
 
-        public Type ExamplesProviderType { get; private set; }
+        public Type ExamplesProviderType { get; }
 
-        public Type ResponseType { get; private set; }
+        public Type ResponseType { get; }
+
+        public HttpStatusCode StatusCode { get; }
     }
 }

@@ -50,10 +50,9 @@ namespace Swashbuckle.Examples
             foreach (var attr in responseAttributes)
             {
                 var schema = schemaRegistry.GetOrRegister(attr.ResponseType);
+                var statusCode = ((int)attr.StatusCode).ToString();
 
-                var response =
-                    operation.responses.FirstOrDefault(
-                        x => x.Value != null && x.Value.schema != null && x.Value.schema.@ref == schema.@ref);
+                var response = operation.responses.FirstOrDefault(r => r.Key == statusCode && (r.Value != null && r.Value.schema != null && r.Value.schema.@ref == schema.@ref));
 
                 if (response.Equals(default(KeyValuePair<string, Response>)) == false)
                 {

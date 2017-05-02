@@ -3,11 +3,11 @@ using Swashbuckle.Examples;
 
 namespace WebApi.Controllers
 {
-    internal class ErrorResponseExample : IExamplesProvider
+    internal class InternalServerResponseExample : IExamplesProvider
     {
         public object GetExamples()
         {
-            return new ErrorResponse { ErrorCode = 456 };
+            return new ErrorResponse { ErrorCode = 500 };
         }
     }
 }

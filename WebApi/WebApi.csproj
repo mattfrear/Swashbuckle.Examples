@@ -183,8 +183,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Models\Examples\NotFoundResponseExample.cs" />
     <Compile Include="Models\Examples\PersonRequestExample.cs" />
-    <Compile Include="Models\Examples\ErrorResponseExample.cs" />
+    <Compile Include="Models\Examples\InternalServerResponseExample.cs" />
     <Compile Include="Models\Examples\PersonResponseExample.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Controllers\HomeController.cs" />
