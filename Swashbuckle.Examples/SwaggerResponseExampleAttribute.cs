@@ -8,18 +8,15 @@ namespace Swashbuckle.Examples
     /// See https://mattfrear.com/2015/04/21/generating-swagger-example-responses-with-swashbuckle/
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class SwaggerResponseExamplesAttribute : Attribute
+    public sealed class SwaggerResponseExampleAttribute : Attribute
     {
-        public SwaggerResponseExamplesAttribute(Type responseType, Type examplesProviderType, HttpStatusCode statusCode = HttpStatusCode.OK)
+        public SwaggerResponseExampleAttribute(HttpStatusCode statusCode, Type examplesProviderType)
         {
-            ResponseType = responseType;
-            ExamplesProviderType = examplesProviderType;
             StatusCode = statusCode;
+            ExamplesProviderType = examplesProviderType;
         }
 
         public Type ExamplesProviderType { get; }
-
-        public Type ResponseType { get; }
 
         public HttpStatusCode StatusCode { get; }
     }

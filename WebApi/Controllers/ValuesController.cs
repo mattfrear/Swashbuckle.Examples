@@ -13,15 +13,15 @@ namespace WebApi.Controllers
         [Route("api/values/person")]
 
         [SwaggerResponse(HttpStatusCode.OK, "Successfully found the person", typeof(PersonResponse))]
-        [SwaggerResponseExamples(typeof(PersonResponse), typeof(PersonResponseExample))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample))]
 
         [SwaggerResponse(HttpStatusCode.NotFound, "Could not find the person", typeof(ErrorResponse))]
-        [SwaggerResponseExamples(typeof(ErrorResponse), typeof(NotFoundResponseExample), HttpStatusCode.NotFound)]
+        [SwaggerResponseExample(HttpStatusCode.NotFound, typeof(NotFoundResponseExample))]
 
         [SwaggerResponse(HttpStatusCode.InternalServerError, "There was an unexpected error", typeof(ErrorResponse))]
-        [SwaggerResponseExamples(typeof(ErrorResponse), typeof(InternalServerResponseExample), HttpStatusCode.InternalServerError)]
+        [SwaggerResponseExample(HttpStatusCode.InternalServerError, typeof(InternalServerResponseExample))]
         
-        [SwaggerRequestExamples(typeof(PersonRequest), typeof(PersonRequestExample))]
+        [SwaggerRequestExample(typeof(PersonRequest), typeof(PersonRequestExample))]
         public IHttpActionResult GetPerson(PersonRequest personRequest)
         {
             var personResponse = new PersonResponse() { Id = 1, FirstName = "Dave" };

@@ -13,20 +13,20 @@ namespace Swashbuckle.Examples
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             SetRequestModelExamples(operation, schemaRegistry, apiDescription);
-            SetResponseModelExamples(operation, schemaRegistry, apiDescription);
+            SetResponseModelExamples(operation, apiDescription);
         }
 
         private static void SetRequestModelExamples(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
-            var requestAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerRequestExamplesAttribute>();
+            var requestAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerRequestExampleAttribute>();
 
             foreach (var attr in requestAttributes)
             {
                 var schema = schemaRegistry.GetOrRegister(attr.RequestType);
 
-                var request = operation.parameters.FirstOrDefault(p => p.@in == "body" && p.schema.@ref == schema.@ref);
+                var parameter = operation.parameters.FirstOrDefault(p => p.@in == "body" && p.schema.@ref == schema.@ref);
 
-                if (request != null)
+                if (parameter != null)
                 {
                     var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
@@ -43,16 +43,15 @@ namespace Swashbuckle.Examples
             }
         }
 
-        private static void SetResponseModelExamples(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+        private static void SetResponseModelExamples(Operation operation, ApiDescription apiDescription)
         {
-            var responseAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerResponseExamplesAttribute>();
+            var responseAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerResponseExampleAttribute>();
 
             foreach (var attr in responseAttributes)
             {
-                var schema = schemaRegistry.GetOrRegister(attr.ResponseType);
                 var statusCode = ((int)attr.StatusCode).ToString();
 
-                var response = operation.responses.FirstOrDefault(r => r.Key == statusCode && (r.Value != null && r.Value.schema != null && r.Value.schema.@ref == schema.@ref));
+                var response = operation.responses.FirstOrDefault(r => r.Key == statusCode);
 
                 if (response.Equals(default(KeyValuePair<string, Response>)) == false)
                 {

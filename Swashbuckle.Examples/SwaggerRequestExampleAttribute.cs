@@ -7,9 +7,9 @@ namespace Swashbuckle.Examples
     /// See https://mattfrear.com/2016/01/25/generating-swagger-example-requests-with-swashbuckle/
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class SwaggerRequestExamplesAttribute : Attribute
+    public sealed class SwaggerRequestExampleAttribute : Attribute
     {
-        public SwaggerRequestExamplesAttribute(Type requestType, Type examplesProviderType)
+        public SwaggerRequestExampleAttribute(Type requestType, Type examplesProviderType)
         {
             RequestType = requestType;
             ExamplesProviderType = examplesProviderType;
