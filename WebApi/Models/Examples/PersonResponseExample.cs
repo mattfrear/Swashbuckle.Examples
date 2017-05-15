@@ -1,7 +1,6 @@
 ﻿using Swashbuckle.Examples;
-using WebApi.Models;
 
-namespace WebApi.Controllers
+namespace WebApi.Models.Examples
 {
     internal class PersonResponseExample : IExamplesProvider
     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using WebApi.Models;
+using WebApi.Models.Examples;
 
 namespace WebApi.Controllers
 {

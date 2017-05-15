@@ -1,6 +1,6 @@
 ﻿using Swashbuckle.Examples;
 
-namespace WebApi.Controllers
+namespace WebApi.Models.Examples
 {
     internal class NotFoundResponseExample : IExamplesProvider
     {

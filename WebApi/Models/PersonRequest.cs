@@ -1,4 +1,4 @@
-﻿namespace WebApi.Controllers
+﻿namespace WebApi.Models
 {
     public class PersonRequest
     {

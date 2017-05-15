@@ -1,7 +1,6 @@
-﻿using System;
-using Swashbuckle.Examples;
+﻿using Swashbuckle.Examples;
 
-namespace WebApi.Controllers
+namespace WebApi.Models.Examples
 {
     internal class InternalServerResponseExample : IExamplesProvider
     {
