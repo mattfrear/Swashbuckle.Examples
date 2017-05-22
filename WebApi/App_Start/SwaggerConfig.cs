@@ -170,6 +170,9 @@ namespace WebApi
 
                         // Enable Swagger examples
                         c.OperationFilter<ExamplesOperationFilter>();
+
+                        // Enable swagger response descriptions
+                        c.OperationFilter<DescriptionOperationFilter>();
                     })
                 .EnableSwaggerUi(c =>
                     {

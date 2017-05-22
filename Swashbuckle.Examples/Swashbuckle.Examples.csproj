@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DescriptionOperationFilter.cs" />
     <Compile Include="ExamplesOperationFilter.cs" />
     <Compile Include="IExamplesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
