@@ -3,6 +3,7 @@ using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 using WebApi.Models;
 using WebApi.Models.Examples;
 
@@ -15,6 +16,7 @@ namespace WebApi.Controllers
 
         [SwaggerResponse(HttpStatusCode.OK, "Successfully found the person", typeof(PersonResponse))]
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample))]
+        // [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample), typeof(DefaultContractResolver))]
 
         [SwaggerResponse(HttpStatusCode.NotFound, "Could not find the person", typeof(ErrorResponse))]
         [SwaggerResponseExample(HttpStatusCode.NotFound, typeof(NotFoundResponseExample))]
@@ -25,7 +27,7 @@ namespace WebApi.Controllers
         [SwaggerRequestExample(typeof(PersonRequest), typeof(PersonRequestExample))]
         public IHttpActionResult GetPerson(PersonRequest personRequest)
         {
-            var personResponse = new PersonResponse() { Id = 1, FirstName = "Dave" };
+            var personResponse = new PersonResponse { Id = 1, FirstName = "Dave" };
             return Ok(personResponse);
         }
 

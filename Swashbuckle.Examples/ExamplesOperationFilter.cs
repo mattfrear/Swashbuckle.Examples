@@ -39,7 +39,7 @@ namespace Swashbuckle.Examples
 
                     if (definitionToUpdate != null)
                     {
-                        definitionToUpdate.example = ((dynamic)FormatAsJson(provider))["application/json"];
+                        definitionToUpdate.example = ((dynamic)FormatAsJson(provider, attr.ContractResolver))["application/json"];
                     }
                 }
             }
@@ -60,19 +60,19 @@ namespace Swashbuckle.Examples
                     if (response.Value != null)
                     {
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
-                        response.Value.examples = FormatAsJson(provider);
+                        response.Value.examples = FormatAsJson(provider, attr.ContractResolver);
                     }
                 }
             }
         }
 
-        private static object ConvertToCamelCase(Dictionary<string, object> examples)
+        private static object ConvertToDesiredCase(Dictionary<string, object> examples, IContractResolver resolver)
         {
-            var jsonString = JsonConvert.SerializeObject(examples, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var jsonString = JsonConvert.SerializeObject(examples, new JsonSerializerSettings { ContractResolver = resolver });
             return JsonConvert.DeserializeObject(jsonString);
         }
 
-        private static object FormatAsJson(IExamplesProvider provider)
+        private static object FormatAsJson(IExamplesProvider provider, IContractResolver resolver)
         {
             var examples = new Dictionary<string, object>
             {
@@ -81,7 +81,7 @@ namespace Swashbuckle.Examples
                 }
             };
 
-            return ConvertToCamelCase(examples);
+            return ConvertToDesiredCase(examples, resolver);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using Newtonsoft.Json.Serialization;
 
 namespace Swashbuckle.Examples
 {
@@ -10,14 +11,17 @@ namespace Swashbuckle.Examples
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class SwaggerResponseExampleAttribute : Attribute
     {
-        public SwaggerResponseExampleAttribute(HttpStatusCode statusCode, Type examplesProviderType)
+        public SwaggerResponseExampleAttribute(HttpStatusCode statusCode, Type examplesProviderType, Type contractResolver = null)
         {
             StatusCode = statusCode;
             ExamplesProviderType = examplesProviderType;
+            ContractResolver = (IContractResolver)Activator.CreateInstance(contractResolver ?? typeof(CamelCasePropertyNamesContractResolver));
         }
 
         public Type ExamplesProviderType { get; }
 
         public HttpStatusCode StatusCode { get; }
+
+        public IContractResolver ContractResolver { get; private set; }
     }
 }
