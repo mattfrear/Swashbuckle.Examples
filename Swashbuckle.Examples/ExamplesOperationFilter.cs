@@ -39,7 +39,13 @@ namespace Swashbuckle.Examples
 
                     if (definitionToUpdate != null)
                     {
-                        definitionToUpdate.example = ((dynamic)FormatAsJson(provider, attr.ContractResolver))["application/json"];
+                        var serializerSettings = new JsonSerializerSettings
+                        {
+                            ContractResolver = attr.ContractResolver,
+                            NullValueHandling = NullValueHandling.Ignore // ignore null values because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
+                        };
+
+                        definitionToUpdate.example = ((dynamic)FormatAsJson(provider, serializerSettings))["application/json"];
                     }
                 }
             }
@@ -60,19 +66,20 @@ namespace Swashbuckle.Examples
                     if (response.Value != null)
                     {
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
-                        response.Value.examples = FormatAsJson(provider, attr.ContractResolver);
+                        var serializerSettings = new JsonSerializerSettings { ContractResolver = attr.ContractResolver };
+                        response.Value.examples = FormatAsJson(provider, serializerSettings);
                     }
                 }
             }
         }
 
-        private static object ConvertToDesiredCase(Dictionary<string, object> examples, IContractResolver resolver)
+        private static object ConvertToDesiredCase(Dictionary<string, object> examples, JsonSerializerSettings serializerSettings)
         {
-            var jsonString = JsonConvert.SerializeObject(examples, new JsonSerializerSettings { ContractResolver = resolver });
+            var jsonString = JsonConvert.SerializeObject(examples, serializerSettings);
             return JsonConvert.DeserializeObject(jsonString);
         }
 
-        private static object FormatAsJson(IExamplesProvider provider, IContractResolver resolver)
+        private static object FormatAsJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings)
         {
             var examples = new Dictionary<string, object>
             {
@@ -81,7 +88,7 @@ namespace Swashbuckle.Examples
                 }
             };
 
-            return ConvertToDesiredCase(examples, resolver);
+            return ConvertToDesiredCase(examples, serializerSettings);
         }
     }
 }
