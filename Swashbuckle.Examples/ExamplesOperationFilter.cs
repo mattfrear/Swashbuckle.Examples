@@ -20,6 +20,8 @@ namespace Swashbuckle.Examples
 
         private static void SetRequestModelExamples(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
+            var controllerSettings = apiDescription?.ActionDescriptor?.ControllerDescriptor?.Configuration?.Formatters?.JsonFormatter?.SerializerSettings;
+
             var requestAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerRequestExampleAttribute>();
 
             foreach (var attr in requestAttributes)
@@ -39,7 +41,7 @@ namespace Swashbuckle.Examples
 
                     if (definitionToUpdate != null)
                     {
-                        var serializerSettings = new JsonSerializerSettings
+                        var serializerSettings = controllerSettings ?? new JsonSerializerSettings
                         {
                             ContractResolver = attr.ContractResolver,
                             NullValueHandling = NullValueHandling.Ignore // ignore null values because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
@@ -53,6 +55,8 @@ namespace Swashbuckle.Examples
 
         private static void SetResponseModelExamples(Operation operation, ApiDescription apiDescription)
         {
+            var controllerSettings = apiDescription?.ActionDescriptor?.ControllerDescriptor?.Configuration?.Formatters?.JsonFormatter?.SerializerSettings;
+
             var responseAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerResponseExampleAttribute>();
 
             foreach (var attr in responseAttributes)
@@ -66,7 +70,7 @@ namespace Swashbuckle.Examples
                     if (response.Value != null)
                     {
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
-                        var serializerSettings = new JsonSerializerSettings { ContractResolver = attr.ContractResolver };
+                        var serializerSettings = controllerSettings ?? new JsonSerializerSettings { ContractResolver = attr.ContractResolver };
                         response.Value.examples = FormatAsJson(provider, serializerSettings);
                     }
                 }
