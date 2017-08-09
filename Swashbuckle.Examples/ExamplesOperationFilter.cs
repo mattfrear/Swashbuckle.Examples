@@ -20,7 +20,7 @@ namespace Swashbuckle.Examples
 
         private static void SetRequestModelExamples(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
-            var controllerSettings = apiDescription?.ActionDescriptor?.ControllerDescriptor?.Configuration?.Formatters?.JsonFormatter?.SerializerSettings;
+            var controllerSerializerSettings = apiDescription?.ActionDescriptor?.ControllerDescriptor?.Configuration?.Formatters?.JsonFormatter?.SerializerSettings;
 
             var requestAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerRequestExampleAttribute>();
 
@@ -46,7 +46,7 @@ namespace Swashbuckle.Examples
 
                     if (definitionToUpdate != null)
                     {
-                        var serializerSettings = controllerSettings ?? new JsonSerializerSettings
+                        var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings
                         {
                             ContractResolver = attr.ContractResolver,
                             NullValueHandling = NullValueHandling.Ignore // ignore null values because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
