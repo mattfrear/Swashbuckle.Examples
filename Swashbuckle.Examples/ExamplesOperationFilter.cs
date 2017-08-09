@@ -34,7 +34,12 @@ namespace Swashbuckle.Examples
                 {
                     var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
-                    var parts = schema.@ref.Split('/');
+                    var parts = schema.@ref?.Split('/');
+                    if (parts == null)
+                    {
+                        continue;
+                    }
+
                     var name = parts.Last();
 
                     var definitionToUpdate = schemaRegistry.Definitions[name];
@@ -55,7 +60,7 @@ namespace Swashbuckle.Examples
 
         private static void SetResponseModelExamples(Operation operation, ApiDescription apiDescription)
         {
-            var controllerSettings = apiDescription?.ActionDescriptor?.ControllerDescriptor?.Configuration?.Formatters?.JsonFormatter?.SerializerSettings;
+            var controllerSerializerSettings = apiDescription?.ActionDescriptor?.ControllerDescriptor?.Configuration?.Formatters?.JsonFormatter?.SerializerSettings;
 
             var responseAttributes = apiDescription.GetControllerAndActionAttributes<SwaggerResponseExampleAttribute>();
 
@@ -70,7 +75,8 @@ namespace Swashbuckle.Examples
                     if (response.Value != null)
                     {
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
-                        var serializerSettings = controllerSettings ?? new JsonSerializerSettings { ContractResolver = attr.ContractResolver };
+
+                        var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings { ContractResolver = attr.ContractResolver, NullValueHandling = NullValueHandling.Ignore };
                         response.Value.examples = FormatAsJson(provider, serializerSettings);
                     }
                 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B3D50E8C-FDA8-4C67-9CA4-77C33BB8A6D9}"
 EndProject
@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{BAAFBD46-B25A-4D0C-AE02-5F7C53AC8C9B}"
 	ProjectSection(SolutionItems) = preProject
+		tools\key.snk = tools\key.snk
 		tools\NuGet instructions.txt = tools\NuGet instructions.txt
 	EndProjectSection
 EndProject
