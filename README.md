@@ -4,6 +4,9 @@ A simple library which adds the [SwaggerRequestExample] and [SwaggerResponseExam
 Example request:
 https://mattfrear.com/2016/01/25/generating-swagger-example-requests-with-swashbuckle/ 
 
+This will populate swagger's definitions.YourObject.example object with whatever object you like.
+
 Example response: 
 https://mattfrear.com/2015/04/21/generating-swagger-example-responses-with-swashbuckle/
 
+This will populate swagger's paths.YourEndpoint.post.responses.200.examples object with whatever object you like.
