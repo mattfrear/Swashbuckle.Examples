@@ -1,5 +1,5 @@
 # Swashbuckle.Examples
-A simple library which adds the `[SwaggerRequestExample]`, `[SwaggerResponseExample]` attributes to [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore). Can also add read the `[Description]` attributes off your Response objects, and can also add an input box for entering an Authorization header.
+A simple library which adds the `[SwaggerRequestExample]`, `[SwaggerResponseExample]` attributes to [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle). Can also add read the `[Description]` attributes off your Response objects, and can also add an input box for entering an Authorization header.
 
 Blog articles: https://mattfrear.com/2016/01/25/generating-swagger-example-requests-with-swashbuckle/
 and: https://mattfrear.com/2015/04/21/generating-swagger-example-responses-with-swashbuckle/
