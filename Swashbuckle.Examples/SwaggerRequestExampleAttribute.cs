@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Swashbuckle.Examples
 {
+    /// <inheritdoc />
     /// <summary>
     /// Adds example requests to your controller endpoints.
     /// See https://mattfrear.com/2016/01/25/generating-swagger-example-requests-with-swashbuckle/

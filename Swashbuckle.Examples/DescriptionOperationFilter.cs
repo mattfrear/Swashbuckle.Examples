@@ -20,7 +20,7 @@ namespace Swashbuckle.Examples
 
             foreach (var attr in responseAttributes)
             {
-                var statusCode = ((int)attr.StatusCode).ToString();
+                var statusCode = attr.StatusCode.ToString();
 
                 var response = operation.responses.FirstOrDefault(r => r.Key == statusCode);
 

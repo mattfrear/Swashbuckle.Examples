@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Web.Http.Description;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Swashbuckle.Swagger;
-using Swashbuckle.Swagger.Annotations;
 
 namespace Swashbuckle.Examples
 {
