@@ -49,8 +49,9 @@ namespace Swashbuckle.Examples
                         var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings
                         {
                             ContractResolver = attr.ContractResolver,
-                            NullValueHandling = NullValueHandling.Ignore // ignore null values because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
                         };
+
+                        serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any RequestExample properies because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
 
                         definitionToUpdate.example = ((dynamic)FormatAsJson(provider, serializerSettings))["application/json"];
                     }
@@ -76,7 +77,8 @@ namespace Swashbuckle.Examples
                     {
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
-                        var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings { ContractResolver = attr.ContractResolver, NullValueHandling = NullValueHandling.Ignore };
+                        var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings { ContractResolver = attr.ContractResolver };
+                        serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any ResponseExample properties because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
                         response.Value.examples = FormatAsJson(provider, serializerSettings);
                     }
                 }
