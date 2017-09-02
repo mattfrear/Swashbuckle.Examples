@@ -3,7 +3,7 @@ using Swashbuckle.Swagger.Annotations;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
-using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 using WebApi.Models;
 using WebApi.Models.Examples;
 
@@ -15,7 +15,7 @@ namespace WebApi.Controllers
         [Route("api/values/person")]
 
         [SwaggerResponse(HttpStatusCode.OK, "Successfully found the person", typeof(PersonResponse))]
-        [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample), jsonConverter: typeof(StringEnumConverter))]
         // [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample), typeof(DefaultContractResolver))]
 
         [SwaggerResponse(HttpStatusCode.NotFound, "Could not find the person", typeof(ErrorResponse))]
@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError, "There was an unexpected error", typeof(ErrorResponse))]
         [SwaggerResponseExample(HttpStatusCode.InternalServerError, typeof(InternalServerResponseExample))]
         
-        [SwaggerRequestExample(typeof(PersonRequest), typeof(PersonRequestExample))]
+        [SwaggerRequestExample(typeof(PersonRequest), typeof(PersonRequestExample), jsonConverter: typeof(StringEnumConverter))]
         public IHttpActionResult GetPerson(PersonRequest personRequest)
         {
             var personResponse = new PersonResponse { Id = 1, FirstName = "Dave" };

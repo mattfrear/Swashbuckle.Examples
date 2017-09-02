@@ -163,3 +163,11 @@ public class PersonResponse
 
 Just enable the `AuthorizationInputOperationFilter` as described in the Installation section above. Note this this will add an
 Authorization input to EVERY endpoint, regardless of if the endpoint is actually secured.
+
+## Pascal case or Camel case?
+The default is camelCase. If you want PascalCase you can pass in a `DefaultContractResolver` like so:
+`[SwaggerResponseExample(200, typeof(PersonResponseExample), typeof(DefaultContractResolver))]`
+
+## Render Enums as strings
+By default `enum`s will output their integer values. If you want to output strings you can pass in a `StringEnumConverter` like so:
+`[SwaggerResponseExample(200, typeof(PersonResponseExample), jsonConverter: typeof(StringEnumConverter))]`
