@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http.Description;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.Swagger;
 
 namespace Swashbuckle.Examples
@@ -29,32 +30,15 @@ namespace Swashbuckle.Examples
 
                 if (parameter != null)
                 {
+                    var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter);
+
                     var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
-                    var parts = schema.@ref?.Split('/');
-                    if (parts == null)
+                    var name = attr.RequestType.Name;
+
+                    if (schemaRegistry.Definitions.ContainsKey(name))
                     {
-                        continue;
-                    }
-
-                    var name = parts.Last();
-
-                    var definitionToUpdate = schemaRegistry.Definitions[name];
-
-                    if (definitionToUpdate != null)
-                    {
-                        var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings
-                        {
-                            ContractResolver = attr.ContractResolver,
-                        };
-
-                        serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any RequestExample properies because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
-
-                        if (attr.JsonConverter != null)
-                        {
-                            serializerSettings.Converters.Add(attr.JsonConverter);
-                        }
-
+                        var definitionToUpdate = schemaRegistry.Definitions[name];
                         definitionToUpdate.example = ((dynamic)FormatAsJson(provider, serializerSettings))["application/json"];
                     }
                 }
@@ -79,14 +63,7 @@ namespace Swashbuckle.Examples
                     {
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
-                        var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings { ContractResolver = attr.ContractResolver };
-                        serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any ResponseExample properties because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
-
-                        if (attr.JsonConverter != null)
-                        {
-                            serializerSettings.Converters.Add(attr.JsonConverter);
-                        }
-
+                        var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter);
                         response.Value.examples = ConvertToDesiredCase(provider.GetExamples(), serializerSettings);
                     }
                 }
@@ -109,6 +86,23 @@ namespace Swashbuckle.Examples
             };
 
             return ConvertToDesiredCase(examples, serializerSettings);
+        }
+
+        private static JsonSerializerSettings SerializerSettings(JsonSerializerSettings controllerSerializerSettings, IContractResolver attributeContractResolver, JsonConverter attributeJsonConverter)
+        {
+            var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings
+            {
+                ContractResolver = attributeContractResolver,
+            };
+
+            serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any RequestExample properies because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
+
+            if (attributeJsonConverter != null)
+            {
+                serializerSettings.Converters.Add(attributeJsonConverter);
+            }
+
+            return serializerSettings;
         }
     }
 }
