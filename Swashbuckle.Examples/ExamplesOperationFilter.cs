@@ -87,13 +87,13 @@ namespace Swashbuckle.Examples
                             serializerSettings.Converters.Add(attr.JsonConverter);
                         }
 
-                        response.Value.examples = FormatAsJson(provider, serializerSettings);
+                        response.Value.examples = ConvertToDesiredCase(provider.GetExamples(), serializerSettings);
                     }
                 }
             }
         }
 
-        private static object ConvertToDesiredCase(Dictionary<string, object> examples, JsonSerializerSettings serializerSettings)
+        private static object ConvertToDesiredCase(object examples, JsonSerializerSettings serializerSettings)
         {
             var jsonString = JsonConvert.SerializeObject(examples, serializerSettings);
             return JsonConvert.DeserializeObject(jsonString);
