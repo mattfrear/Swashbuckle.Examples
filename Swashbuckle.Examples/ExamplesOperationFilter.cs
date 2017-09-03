@@ -39,7 +39,7 @@ namespace Swashbuckle.Examples
                     if (schemaRegistry.Definitions.ContainsKey(name))
                     {
                         var definitionToUpdate = schemaRegistry.Definitions[name];
-                        definitionToUpdate.example = ((dynamic)FormatAsJson(provider, serializerSettings))["application/json"];
+                        definitionToUpdate.example = FormatJson(provider, serializerSettings);
                     }
                 }
             }
@@ -64,28 +64,18 @@ namespace Swashbuckle.Examples
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
                         var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter);
-                        response.Value.examples = ConvertToDesiredCase(provider.GetExamples(), serializerSettings);
+                        response.Value.examples = FormatJson(provider, serializerSettings);
                     }
                 }
             }
         }
 
-        private static object ConvertToDesiredCase(object examples, JsonSerializerSettings serializerSettings)
+        private static object FormatJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings)
         {
+            var examples = provider.GetExamples();
             var jsonString = JsonConvert.SerializeObject(examples, serializerSettings);
-            return JsonConvert.DeserializeObject(jsonString);
-        }
-
-        private static object FormatAsJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings)
-        {
-            var examples = new Dictionary<string, object>
-            {
-                {
-                    "application/json", provider.GetExamples()
-                }
-            };
-
-            return ConvertToDesiredCase(examples, serializerSettings);
+            var result = JsonConvert.DeserializeObject(jsonString);
+            return result;
         }
 
         private static JsonSerializerSettings SerializerSettings(JsonSerializerSettings controllerSerializerSettings, IContractResolver attributeContractResolver, JsonConverter attributeJsonConverter)
