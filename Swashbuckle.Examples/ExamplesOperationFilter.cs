@@ -34,8 +34,16 @@ namespace Swashbuckle.Examples
 
                     var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
-                    var name = attr.RequestType.Name;
+                    // name = attr.RequestType.Name; // this doesn't work for generic types, so need to to schema.ref split
 
+                    var parts = schema.@ref?.Split('/');
+                    if (parts == null)
+                    {
+                        continue;
+                    }
+
+                    var name = parts.Last();
+                    
                     if (schemaRegistry.Definitions.ContainsKey(name))
                     {
                         var definitionToUpdate = schemaRegistry.Definitions[name];
