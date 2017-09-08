@@ -28,14 +28,20 @@ namespace Swashbuckle.Examples
                 {
                     if (response.Value != null)
                     {
-                        var definition = schemaRegistry.Definitions[attr.Type.Name];
-
-                        var propertiesWithDescription = attr.Type.GetProperties().Where(prop => prop.IsDefined(typeof(DescriptionAttribute), false));
-
-                        foreach (var prop in propertiesWithDescription)
+                        if (schemaRegistry.Definitions.ContainsKey(attr.Type.Name))
                         {
-                            var descriptionAttribute = (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false).First();
-                            definition.properties[prop.Name].description = descriptionAttribute.Description;
+                            var definition = schemaRegistry.Definitions[attr.Type.Name];
+
+                            var propertiesWithDescription = attr.Type.GetProperties()
+                                .Where(prop => prop.IsDefined(typeof(DescriptionAttribute), false));
+
+                            foreach (var prop in propertiesWithDescription)
+                            {
+                                var descriptionAttribute =
+                                    (DescriptionAttribute) prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                                        .First();
+                                definition.properties[prop.Name].description = descriptionAttribute.Description;
+                            }
                         }
                     }
                 }
