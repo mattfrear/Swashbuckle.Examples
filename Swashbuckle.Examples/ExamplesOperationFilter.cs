@@ -10,6 +10,8 @@ namespace Swashbuckle.Examples
 {
     public class ExamplesOperationFilter : IOperationFilter
     {
+        public static bool ExtendedExampleParameter { get; set; }
+
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             SetRequestModelExamples(operation, schemaRegistry, apiDescription);
@@ -43,7 +45,7 @@ namespace Swashbuckle.Examples
                     }
 
                     var name = parts.Last();
-                    
+
                     if (schemaRegistry.Definitions.ContainsKey(name))
                     {
                         var definitionToUpdate = schemaRegistry.Definitions[name];
@@ -78,9 +80,15 @@ namespace Swashbuckle.Examples
             }
         }
 
+        private class ExampleContainer
+        {
+            [JsonProperty("application/json")]
+            public object Example { get; set; }
+        }
+
         private static object FormatJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings)
         {
-            var examples = provider.GetExamples();
+            var examples = ExtendedExampleParameter ? new ExampleContainer { Example = provider.GetExamples() } : provider.GetExamples();
             var jsonString = JsonConvert.SerializeObject(examples, serializerSettings);
             var result = JsonConvert.DeserializeObject(jsonString);
             return result;
