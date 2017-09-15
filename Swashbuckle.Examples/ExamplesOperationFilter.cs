@@ -47,7 +47,7 @@ namespace Swashbuckle.Examples
                     if (schemaRegistry.Definitions.ContainsKey(name))
                     {
                         var definitionToUpdate = schemaRegistry.Definitions[name];
-                        definitionToUpdate.example = FormatJson(provider, serializerSettings);
+                        definitionToUpdate.example = FormatJson(provider, serializerSettings, false);
                     }
                 }
             }
@@ -72,15 +72,29 @@ namespace Swashbuckle.Examples
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
                         var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter);
-                        response.Value.examples = FormatJson(provider, serializerSettings);
+                        response.Value.examples = FormatJson(provider, serializerSettings, true);
                     }
                 }
             }
         }
 
-        private static object FormatJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings)
+        private static object FormatJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings, bool includeMediaType)
         {
-            var examples = provider.GetExamples();
+            object examples;
+            if (includeMediaType)
+            {
+                examples = new Dictionary<string, object>
+                {
+                    {
+                        "application/json", provider.GetExamples()
+                    }
+                };
+            }
+            else
+            {
+                examples = provider.GetExamples();
+            }
+
             var jsonString = JsonConvert.SerializeObject(examples, serializerSettings);
             var result = JsonConvert.DeserializeObject(jsonString);
             return result;

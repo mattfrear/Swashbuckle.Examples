@@ -12,8 +12,7 @@
     <copyright>Copyright 2017</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      - Fix bug introduced in 3.3.1 - Generic example requests not working Issue #10
-      - Fix bug where the controller's serializer settings would be overwritten
+      - Fix bug introduced in 3.3.1. I removed the outer "application/json" mime type from responses, but this is actually the correct according to the Swagger 2.0 spec.
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.2.2" />
