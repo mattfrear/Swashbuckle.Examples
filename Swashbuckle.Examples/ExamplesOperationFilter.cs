@@ -34,12 +34,20 @@ namespace Swashbuckle.Examples
 
                     var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
-                    var name = attr.RequestType.Name;
+                    // name = attr.RequestType.Name; // this doesn't work for generic types, so need to to schema.ref split
 
+                    var parts = schema.@ref?.Split('/');
+                    if (parts == null)
+                    {
+                        continue;
+                    }
+
+                    var name = parts.Last();
+                    
                     if (schemaRegistry.Definitions.ContainsKey(name))
                     {
                         var definitionToUpdate = schemaRegistry.Definitions[name];
-                        definitionToUpdate.example = FormatJson(provider, serializerSettings);
+                        definitionToUpdate.example = FormatJson(provider, serializerSettings, false);
                     }
                 }
             }
@@ -64,15 +72,29 @@ namespace Swashbuckle.Examples
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
                         var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter);
-                        response.Value.examples = FormatJson(provider, serializerSettings);
+                        response.Value.examples = FormatJson(provider, serializerSettings, true);
                     }
                 }
             }
         }
 
-        private static object FormatJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings)
+        private static object FormatJson(IExamplesProvider provider, JsonSerializerSettings serializerSettings, bool includeMediaType)
         {
-            var examples = provider.GetExamples();
+            object examples;
+            if (includeMediaType)
+            {
+                examples = new Dictionary<string, object>
+                {
+                    {
+                        "application/json", provider.GetExamples()
+                    }
+                };
+            }
+            else
+            {
+                examples = provider.GetExamples();
+            }
+
             var jsonString = JsonConvert.SerializeObject(examples, serializerSettings);
             var result = JsonConvert.DeserializeObject(jsonString);
             return result;
@@ -80,10 +102,9 @@ namespace Swashbuckle.Examples
 
         private static JsonSerializerSettings SerializerSettings(JsonSerializerSettings controllerSerializerSettings, IContractResolver attributeContractResolver, JsonConverter attributeJsonConverter)
         {
-            var serializerSettings = controllerSerializerSettings ?? new JsonSerializerSettings
-            {
-                ContractResolver = attributeContractResolver,
-            };
+            var serializerSettings = DuplicateSerializerSettings(controllerSerializerSettings);
+
+            serializerSettings.ContractResolver = attributeContractResolver;
 
             serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any RequestExample properies because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
 
@@ -93,6 +114,39 @@ namespace Swashbuckle.Examples
             }
 
             return serializerSettings;
+        }
+
+        // Duplicate the controller's serializer settings because I don't want to overwrite them
+        private static JsonSerializerSettings DuplicateSerializerSettings(JsonSerializerSettings controllerSerializerSettings)
+        {
+            if (controllerSerializerSettings == null)
+            {
+                return new JsonSerializerSettings();
+            }
+
+            return new JsonSerializerSettings
+            {
+                Binder = controllerSerializerSettings.Binder,
+                Converters = new List<JsonConverter>(controllerSerializerSettings.Converters),
+                CheckAdditionalContent = controllerSerializerSettings.CheckAdditionalContent,
+                ConstructorHandling = controllerSerializerSettings.ConstructorHandling,
+                Context = controllerSerializerSettings.Context,
+                ContractResolver = controllerSerializerSettings.ContractResolver,
+                Culture = controllerSerializerSettings.Culture,
+                DateFormatHandling = controllerSerializerSettings.DateFormatHandling,
+                DateParseHandling = controllerSerializerSettings.DateParseHandling,
+                DateTimeZoneHandling = controllerSerializerSettings.DateTimeZoneHandling,
+                DefaultValueHandling = controllerSerializerSettings.DefaultValueHandling,
+                Error = controllerSerializerSettings.Error,
+                Formatting = controllerSerializerSettings.Formatting,
+                MaxDepth = controllerSerializerSettings.MaxDepth,
+                MissingMemberHandling = controllerSerializerSettings.MissingMemberHandling,
+                NullValueHandling = controllerSerializerSettings.NullValueHandling,
+                ObjectCreationHandling = controllerSerializerSettings.ObjectCreationHandling,
+                PreserveReferencesHandling = controllerSerializerSettings.PreserveReferencesHandling,
+                ReferenceLoopHandling = controllerSerializerSettings.ReferenceLoopHandling,
+                TypeNameHandling = controllerSerializerSettings.TypeNameHandling,
+            };
         }
     }
 }

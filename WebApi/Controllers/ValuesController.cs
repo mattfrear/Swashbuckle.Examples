@@ -27,7 +27,23 @@ namespace WebApi.Controllers
         [SwaggerRequestExample(typeof(PersonRequest), typeof(PersonRequestExample), jsonConverter: typeof(StringEnumConverter))]
         public IHttpActionResult GetPerson(PersonRequest personRequest)
         {
-            var personResponse = new PersonResponse { Id = 1, FirstName = "Dave" };
+            var personResponse = new PersonResponse { Id = 1, Title = Title.Mr, FirstName = "Dave", Age = 32 };
+            return Ok(personResponse);
+        }
+
+        [HttpPost]
+        [Route("api/values/genericperson")]
+        [SwaggerResponse(HttpStatusCode.OK, "Successfully found the person", typeof(ResponseWrapper<PersonResponse>))]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(WrappedPersonResponseExample), jsonConverter: typeof(StringEnumConverter))]
+        [SwaggerRequestExample(typeof(RequestWrapper<PersonRequest>), typeof(WrappedPersonRequestExample), jsonConverter: typeof(StringEnumConverter))]
+        public IHttpActionResult GetGenericPerson(RequestWrapper<PersonRequest> personRequest)
+        {
+            var personResponse = new ResponseWrapper<PersonResponse>
+            {
+                StatusCode = HttpStatusCode.OK,
+                Body = new PersonResponse {Id = 1, FirstName = "Dave"}
+            };
+
             return Ok(personResponse);
         }
 

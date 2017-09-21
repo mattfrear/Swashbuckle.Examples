@@ -184,17 +184,21 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Models\Examples\NotFoundResponseExample.cs" />
+    <Compile Include="Models\Examples\WrappedPersonRequestExample.cs" />
     <Compile Include="Models\Examples\PersonRequestExample.cs" />
     <Compile Include="Models\Examples\InternalServerResponseExample.cs" />
     <Compile Include="Models\Examples\PersonResponseExample.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Examples\WrappedPersonResponseExample.cs" />
     <Compile Include="Models\PersonRequest.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\PersonResponse.cs" />
+    <Compile Include="Models\ResponseWrapper.cs" />
+    <Compile Include="Models\RequestWrapper.cs" />
     <Compile Include="Models\Title.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

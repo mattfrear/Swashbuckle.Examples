@@ -1,4 +1,4 @@
 1. Update the version number in the AssemblyInfo.cs,build solution.
 2. Update releaseNotes section in the .nuspec file
 3. nuget pack Swashbuckle.Examples.csproj
-4. nuget push Swashbuckle.AspNetCore.Examples.1.2.0.nupkg MySecretNuGetApiKeyHere -Source https://www.nuget.org/api/v2/package
+4. nuget push Swashbuckle.Examples.1.2.0.nupkg MySecretNuGetApiKeyHere -Source https://www.nuget.org/api/v2/package
