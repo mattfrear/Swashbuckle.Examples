@@ -20,6 +20,11 @@ namespace Swashbuckle.Examples
 
             foreach (var attr in responseAttributes)
             {
+                if (attr.Type == null)
+                {
+                    continue;
+                }
+
                 var statusCode = attr.StatusCode.ToString();
 
                 var response = operation.responses.FirstOrDefault(r => r.Key == statusCode);

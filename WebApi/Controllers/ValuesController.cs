@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.NotFound, "Could not find the person", typeof(ErrorResponse))]
         [SwaggerResponseExample(HttpStatusCode.NotFound, typeof(NotFoundResponseExample))]
 
-        [SwaggerResponse(HttpStatusCode.InternalServerError, "There was an unexpected error", typeof(ErrorResponse))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, "There was an unexpected error")]
         [SwaggerResponseExample(HttpStatusCode.InternalServerError, typeof(InternalServerResponseExample))]
         
         [SwaggerRequestExample(typeof(PersonRequest), typeof(PersonRequestExample), jsonConverter: typeof(StringEnumConverter))]
