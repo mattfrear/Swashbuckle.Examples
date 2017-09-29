@@ -67,6 +67,7 @@
     <Compile Include="DescriptionOperationFilter.cs" />
     <Compile Include="ExamplesOperationFilter.cs" />
     <Compile Include="IExamplesProvider.cs" />
+    <Compile Include="InvalidTypeException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwaggerRequestExampleAttribute.cs" />
     <Compile Include="SwaggerResponseExampleAttribute.cs" />
