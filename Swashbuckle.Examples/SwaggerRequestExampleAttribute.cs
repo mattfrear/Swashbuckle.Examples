@@ -21,6 +21,14 @@ namespace Swashbuckle.Examples
         /// <param name="jsonConverter">An optional jsonConverter to use, e.g. typeof(StringEnumConverter) will render strings as enums</param>
         public SwaggerRequestExampleAttribute(Type requestType, Type examplesProviderType, Type contractResolver = null, Type jsonConverter = null)
         {
+            if (examplesProviderType.GetInterface(nameof(IExamplesProvider)) == null)
+            {
+                throw new InvalidTypeException(
+                    paramName: nameof(examplesProviderType),
+                    invalidType: examplesProviderType,
+                    expectedType: typeof(IExamplesProvider));
+            }
+
             RequestType = requestType;
             ExamplesProviderType = examplesProviderType;
             JsonConverter = jsonConverter == null ? null : (JsonConverter)Activator.CreateInstance(jsonConverter);
