@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web.Http.Description;
@@ -35,20 +36,37 @@ namespace Swashbuckle.Examples
                     {
                         if (schemaRegistry.Definitions.ContainsKey(attr.Type.Name))
                         {
-                            var definition = schemaRegistry.Definitions[attr.Type.Name];
-
-                            var propertiesWithDescription = attr.Type.GetProperties()
-                                .Where(prop => prop.IsDefined(typeof(DescriptionAttribute), false));
-
-                            foreach (var prop in propertiesWithDescription)
-                            {
-                                var descriptionAttribute =
-                                    (DescriptionAttribute) prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                                        .First();
-                                definition.properties[prop.Name].description = descriptionAttribute.Description;
-                            }
+                            RecursivelyParseDescriptions(schemaRegistry, attr.Type);
                         }
                     }
+                }
+            }
+        }
+
+        private static void RecursivelyParseDescriptions(SchemaRegistry schemaRegistry, Type propType)
+        {
+            var definition = schemaRegistry.Definitions[propType.Name];
+
+            var propertiesWithDescription = propType.GetProperties()
+                .Where(prop => prop.IsDefined(typeof(DescriptionAttribute), false));
+
+            foreach (var prop in propertiesWithDescription)
+            {
+                var descriptionAttribute =
+                    (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                        .First();
+                definition.properties[prop.Name].description = descriptionAttribute.Description;
+            }
+
+            //iterate children that are in this assembly
+            var allProperties = propType.GetProperties()
+                .Where(prop => prop.PropertyType.Assembly == propType.Assembly);
+
+            foreach (var prop in allProperties)
+            {
+                if (schemaRegistry.Definitions.ContainsKey(prop.Name))
+                {
+                    RecursivelyParseDescriptions(schemaRegistry, prop.PropertyType);
                 }
             }
         }

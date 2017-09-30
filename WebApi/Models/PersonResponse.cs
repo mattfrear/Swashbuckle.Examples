@@ -18,5 +18,7 @@ namespace WebApi.Models
 
         [Description("His income, in dollars, if known. If unknown then null")]
         public decimal? Income { get; set; }
+
+        public Gender Gender { get; set; }
     }
 }
