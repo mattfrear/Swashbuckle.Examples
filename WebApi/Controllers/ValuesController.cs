@@ -23,7 +23,7 @@ namespace WebApi.Controllers
 
         [SwaggerResponse(HttpStatusCode.InternalServerError, "There was an unexpected error")]
         [SwaggerResponseExample(HttpStatusCode.InternalServerError, typeof(InternalServerResponseExample))]
-        
+
         [SwaggerRequestExample(typeof(PersonRequest), typeof(PersonRequestExample), jsonConverter: typeof(StringEnumConverter))]
         public IHttpActionResult GetPerson(PersonRequest personRequest)
         {
@@ -41,37 +41,25 @@ namespace WebApi.Controllers
             var personResponse = new ResponseWrapper<PersonResponse>
             {
                 StatusCode = HttpStatusCode.OK,
-                Body = new PersonResponse {Id = 1, FirstName = "Dave"}
+                Body = new PersonResponse { Id = 1, FirstName = "Dave" }
             };
 
             return Ok(personResponse);
         }
 
-        // GET api/values
-        public IEnumerable<string> Get()
+        [HttpPost]
+        [Route("api/values/listperson")]
+        [SwaggerResponse(HttpStatusCode.OK, "Successfully found the people", typeof(List<PersonResponse>))]
+        [SwaggerRequestExample(typeof(PeopleRequest), typeof(ListPeopleRequestExample), jsonConverter: typeof(StringEnumConverter))]
+        public IHttpActionResult GetPersonList(List<PeopleRequest> peopleRequest)
         {
-            return new string[] { "value1", "value2" };
-        }
+            var personResponse = new ResponseWrapper<PersonResponse>
+            {
+                StatusCode = HttpStatusCode.OK,
+                Body = new PersonResponse { Id = 1, FirstName = "Dave" }
+            };
 
-        // GET api/values/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
+            return Ok(personResponse);
         }
     }
 }

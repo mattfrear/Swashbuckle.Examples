@@ -185,14 +185,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Models\Examples\NotFoundResponseExample.cs" />
+    <Compile Include="Models\Examples\ListPeopleRequestExample.cs" />
     <Compile Include="Models\Examples\WrappedPersonRequestExample.cs" />
     <Compile Include="Models\Examples\PersonRequestExample.cs" />
     <Compile Include="Models\Examples\InternalServerResponseExample.cs" />
     <Compile Include="Models\Examples\PersonResponseExample.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Models\Examples\WrappedPersonResponseExample.cs" />
     <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\PeopleRequest.cs" />
     <Compile Include="Models\PersonRequest.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
