@@ -192,6 +192,8 @@ swagger.json, they will not display correctly. This is due to an bug in swagger-
 [Issue 8](https://github.com/mattfrear/Swashbuckle.Examples/issues/8) Our response example is correct as per the Swagger spec, so I'm not sure 
 why it is being displayed incorrectly - I suspect it's a bug in swagger-ui, as this didn't happen with older versions of Swashbuckle.
 
+- Request examples are only supported when the request parameter is in the body of the request, and not on the querystring. This is a limitation of the Swagger 2.0 spec.
+
 - For requests, in the Swagger 2.0 spec there is only one schema for each request object defined across all the API endpoints. So if you are using the same request object in multiple API endpoints,
 i.e. on multiple controller actions like this:
 
