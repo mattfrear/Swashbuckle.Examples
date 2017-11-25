@@ -113,6 +113,28 @@ Field Name | Type | Description
 ---|:---:|---
 example | Any | A free-form property to include an example of an instance for this schema.
 
+### List Request examples
+As of version 3.5, List<T> request examples are supported. For any List<T> in the request, you may define a SwaggerRequestExample for T. 
+Your IExamplesProvider should only return a single T and not a List<T>.
+Working example:
+
+```
+[SwaggerRequestExample(typeof(PeopleRequest), typeof(ListPeopleRequestExample), jsonConverter: typeof(StringEnumConverter))]
+public IHttpActionResult GetPersonList(List<PeopleRequest> peopleRequest)
+{
+
+// and then:
+
+public class ListPeopleRequestExample : IExamplesProvider
+{
+    public object GetExamples()
+    {
+        return new PeopleRequest { Title = Title.Mr, Age = 24, FirstName = "Dave in a list", Income = null };
+    }
+}
+
+```
+
 ## How to use - Response examples
 
 Decorate your methods with the new SwaggerResponseExample attribute:
@@ -162,7 +184,6 @@ Example response for application/json mimetype of a Pet data type:
 
 Note that this differs from the Request example in that the mime type is a required property on the response example but not so on the request example.
 
-
 ### Known issues
 - Although you can add a response examples for each HTTP status code (200, 400, 404 etc), and they will appear in the
 swagger.json, they will not display correctly. This is due to an bug in swagger-ui. [Issue 9](https://github.com/mattfrear/Swashbuckle.AspNetCore.Examples/issues/9)
@@ -170,6 +191,20 @@ swagger.json, they will not display correctly. This is due to an bug in swagger-
 - The response example is displayed wrapped in a JSON object which has the media type, i.e. "application/json" as the key, and the example as the value. 
 [Issue 8](https://github.com/mattfrear/Swashbuckle.Examples/issues/8) Our response example is correct as per the Swagger spec, so I'm not sure 
 why it is being displayed incorrectly - I suspect it's a bug in swagger-ui, as this didn't happen with older versions of Swashbuckle.
+
+- For requests, in the Swagger 2.0 spec there is only one schema for each request object defined across all the API endpoints. So if you are using the same request object in multiple API endpoints,
+i.e. on multiple controller actions like this:
+
+```
+DeliveryOptions.cs
+public async Task<IHttpActionResult> DeliveryOptionsForAddress(DeliveryOptionsSearchModel search)
+...
+
+// maybe in some other controller, e.g. Search.cs
+public async Task<IHttpActionResult> Search(DeliveryOptionsSearchModel search)
+```
+
+That DeliveryOptionsSearchModel object is only defined once in the entire Swagger document and it can only have one example defined.
 
 ## How to use - Document response properties
 Define the SwaggerResponse, as usual:
