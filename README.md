@@ -114,8 +114,8 @@ Field Name | Type | Description
 example | Any | A free-form property to include an example of an instance for this schema.
 
 ### List Request examples
-As of version 3.5, List<T> request examples are supported. For any List<T> in the request, you may define a SwaggerRequestExample for T. 
-Your IExamplesProvider should only return a single T and not a List<T>.
+As of version 3.5, `List<T>` request examples are supported. For any `List<T>` in the request, you may define a SwaggerRequestExample for `T`. 
+Your IExamplesProvider should only return a single `T` and not a `List<T>`.
 Working example:
 
 ```
