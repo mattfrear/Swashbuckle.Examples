@@ -12,8 +12,7 @@
     <copyright>Copyright 2017</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      - Throw an InvalidTypeException if IExamplesProvider is not implemented
-      - Check all child object properties for [Description] attribute
+      - Added experimental support for generic Lists in request examples
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.2.2" />
