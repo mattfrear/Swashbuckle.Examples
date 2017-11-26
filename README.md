@@ -206,7 +206,7 @@ public async Task<IHttpActionResult> DeliveryOptionsForAddress(DeliveryOptionsSe
 public async Task<IHttpActionResult> Search(DeliveryOptionsSearchModel search)
 ```
 
-That DeliveryOptionsSearchModel object is only defined once in the entire Swagger document and it can only have one example defined.
+That DeliveryOptionsSearchModel object is only defined once in the entire Swagger document and it can only have one **request** example defined.
 
 ## How to use - Document response properties
 Define the SwaggerResponse, as usual:
