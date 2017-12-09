@@ -53,12 +53,7 @@ namespace WebApi.Controllers
         [SwaggerRequestExample(typeof(PeopleRequest), typeof(ListPeopleRequestExample), jsonConverter: typeof(StringEnumConverter))]
         public IHttpActionResult GetPersonList(List<PeopleRequest> peopleRequest)
         {
-            var personResponse = new ResponseWrapper<PersonResponse>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Body = new PersonResponse { Id = 1, FirstName = "Dave" }
-            };
-
+            var personResponse = new PersonResponse { Id = 1, FirstName = "Sally" };
             return Ok(personResponse);
         }
     }
