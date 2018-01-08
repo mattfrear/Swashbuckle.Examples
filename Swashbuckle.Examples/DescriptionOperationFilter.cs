@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Web.Http.Description;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.Swagger;
 using Swashbuckle.Swagger.Annotations;
 
@@ -13,6 +17,7 @@ namespace Swashbuckle.Examples
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             SetResponseModelDescriptions(operation, schemaRegistry, apiDescription);
+            SetRequestModelDescriptions(operation, schemaRegistry, apiDescription);
         }
 
         private static void SetResponseModelDescriptions(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
@@ -36,39 +41,89 @@ namespace Swashbuckle.Examples
                     {
                         if (schemaRegistry.Definitions.ContainsKey(attr.Type.Name))
                         {
-                            RecursivelyParseDescriptions(schemaRegistry, attr.Type);
+                            UpdateDescriptions(schemaRegistry, attr.Type, true);
                         }
                     }
                 }
             }
         }
 
-        private static void RecursivelyParseDescriptions(SchemaRegistry schemaRegistry, Type propType)
+        private static void SetRequestModelDescriptions(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
-            var definition = schemaRegistry.Definitions[propType.Name];
-
-            var propertiesWithDescription = propType.GetProperties()
-                .Where(prop => prop.IsDefined(typeof(DescriptionAttribute), false));
-
-            foreach (var prop in propertiesWithDescription)
+            foreach (var parameterDescription in apiDescription.ParameterDescriptions)
             {
-                var descriptionAttribute =
-                    (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                        .First();
-                definition.properties[prop.Name].description = descriptionAttribute.Description;
+                UpdateDescriptions(schemaRegistry, parameterDescription.GetType(), true);
+            }
+        }
+
+        private static void UpdateDescriptions(SchemaRegistry schemaRegistry, Type type, bool recursively = false)
+        {
+            if (type.IsGenericType)
+            {
+                foreach (var genericArgumentType in type.GetGenericArguments())
+                {
+                    UpdateDescriptions(schemaRegistry, genericArgumentType, true);
+                }
+                return;
             }
 
-            //iterate children that are in this assembly
-            var allProperties = propType.GetProperties()
-                .Where(prop => prop.PropertyType.Assembly == propType.Assembly);
-
-            foreach (var prop in allProperties)
+            if (!schemaRegistry.Definitions.ContainsKey(type.Name))
             {
-                if (schemaRegistry.Definitions.ContainsKey(prop.Name))
+                return;
+            }
+
+            var propertiesWithDescription = type.GetProperties().Where(prop => prop.IsDefined(typeof(DescriptionAttribute), false)).ToList();
+            if (!propertiesWithDescription.Any())
+            {
+                return;
+            }
+
+            var definition = schemaRegistry.Definitions[ResolveDefinitionKey(type)];
+            foreach (var propertyInfo in propertiesWithDescription)
+            {
+                UpdatePropertyDescription(propertyInfo, definition);
+                if (recursively)
                 {
-                    RecursivelyParseDescriptions(schemaRegistry, prop.PropertyType);
+                    UpdateDescriptions(schemaRegistry, propertyInfo.PropertyType, true);
                 }
             }
+        }
+
+        private static void UpdatePropertyDescription(PropertyInfo prop, Schema schema)
+        {
+            var propName = ToCamelCase(GetPropertyName(prop));
+            if (schema.properties.ContainsKey(propName))
+            {
+                var descriptionAttribute = (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false).First();
+                schema.properties[propName].description = descriptionAttribute.Description;
+            }
+        }
+
+        private static string GetPropertyName(PropertyInfo prop)
+        {
+            if (prop.IsDefined(typeof(DataMemberAttribute), false))
+            {
+                var dataMemberAttribute = (DataMemberAttribute)prop.GetCustomAttributes(typeof(DataMemberAttribute), false).First();
+                return dataMemberAttribute.Name ?? prop.Name;
+            }
+            else if (prop.IsDefined(typeof(JsonPropertyAttribute), false))
+            {
+                var jsonPropertyAttribute = (JsonPropertyAttribute)prop.GetCustomAttributes(typeof(JsonPropertyAttribute), false).First();
+                return jsonPropertyAttribute.PropertyName ?? prop.Name;
+            }
+
+            return prop.Name;
+        }
+
+        private static string ResolveDefinitionKey(Type type)
+        {
+            return type.FriendlyId(false);
+        }
+
+        private static string ToCamelCase(string value)
+        {
+            // lower case the first letter
+            return value.Substring(0, 1).ToLower() + value.Substring(1);
         }
     }
 }

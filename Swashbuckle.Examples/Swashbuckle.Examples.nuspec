@@ -12,7 +12,8 @@
     <copyright>Copyright 2017</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      - Added experimental support for generic Lists in request examples
+      - Allow [Description] attribute on Request objects (thanks @dmitry-pavlov)
+      - ported @dmitry-pavlov bug fix of [Description] not working on response objects (Issue #28)
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.2.2" />
