@@ -91,7 +91,7 @@ namespace Swashbuckle.Examples
 
         private static void UpdatePropertyDescription(PropertyInfo prop, Schema schema)
         {
-            var propName = ToCamelCase(GetPropertyName(prop));
+            var propName = GetPropertyName(prop);
             if (schema.properties.ContainsKey(propName))
             {
                 var descriptionAttribute = (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false).First();
