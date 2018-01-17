@@ -65,6 +65,9 @@ GlobalConfiguration.Configuration
 
             // Enable swagger response descriptions
             c.OperationFilter<DescriptionOperationFilter>();
+
+            // Enable swagger response headers
+            c.OperationFilter<AddResponseHeadersFilter>();
         })
 
 ```
@@ -244,6 +247,16 @@ public class PersonResponse
 
 Just enable the `AuthorizationInputOperationFilter` as described in the Installation section above. Note this this will add an
 Authorization input to EVERY endpoint, regardless of if the endpoint is actually secured.
+
+## How to use - Response headers
+
+Specify one or more `[SwaggerResponseHeader]` attributes on your controller action, like so:
+```
+[SwaggerResponseHeader(HttpStatusCode.OK, "Location", "string", "Location of the newly created resource")]
+[SwaggerResponseHeader(HttpStatusCode.OK, "ETag", "string", "An ETag of the resource")]
+public IHttpActionResult GetPerson(PersonRequest personRequest)
+{
+```
 
 ## Pascal case or Camel case?
 The default is camelCase. If you want PascalCase you can pass in a `DefaultContractResolver` like so:
