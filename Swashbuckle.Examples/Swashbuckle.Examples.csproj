@@ -65,13 +65,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizationInputOperationFilter.cs" />
+    <Compile Include="ResponseHeaders\AddResponseHeadersFilter.cs" />
+    <Compile Include="ResponseHeaders\SwaggerResponseHeaderAttribute.cs" />
     <Compile Include="DescriptionOperationFilter.cs" />
-    <Compile Include="ExamplesOperationFilter.cs" />
-    <Compile Include="IExamplesProvider.cs" />
-    <Compile Include="InvalidTypeException.cs" />
+    <Compile Include="Examples\ExamplesOperationFilter.cs" />
+    <Compile Include="Examples\IExamplesProvider.cs" />
+    <Compile Include="Examples\InvalidTypeException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SwaggerRequestExampleAttribute.cs" />
-    <Compile Include="SwaggerResponseExampleAttribute.cs" />
+    <Compile Include="Examples\SwaggerRequestExampleAttribute.cs" />
+    <Compile Include="Examples\SwaggerResponseExampleAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="key.snk" />

@@ -32,17 +32,23 @@ You'll see some more realistic data (or whatever you want):
 
 ![response with awesome data](https://mattfrear.files.wordpress.com/2015/04/response-new.png?w=700&h=358)
 
-## Documenting Response properties (new!)
+## Documenting Response properties
 
 Lets you add a comment-like description to properties on your response, e.g.
 ![descriptions](https://mattfrear.files.wordpress.com/2017/09/descriptions.jpg)
 
-## Authorization header input box (new!)
+## Authorization header input box
 
 Adds an input so that you can send an Authorization header to your API. Useful for API endpoints that have JWT token
 authentication. e.g.
 
 ![authorization](https://mattfrear.files.wordpress.com/2017/09/authorization.jpg)
+
+## Add a response header (new!)
+
+Allows you to specify response headers for any operation
+
+![response headers](https://user-images.githubusercontent.com/169179/35051682-b8217740-fb9d-11e7-8bec-98d4b088dfa5.png)
 
 ## Installation
 Install the [NuGet package](https://www.nuget.org/packages/Swashbuckle.Examples/), then enable whichever filters 
