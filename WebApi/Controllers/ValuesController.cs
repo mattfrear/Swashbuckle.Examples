@@ -9,8 +9,14 @@ using WebApi.Models.Examples;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     public class ValuesController : ApiController
     {
+        /// <summary>
+        /// Gets a person
+        /// </summary>
+        /// <param name="personRequest"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/values/person")]
 
@@ -28,6 +34,7 @@ namespace WebApi.Controllers
 
         [SwaggerResponseHeader(HttpStatusCode.OK, "Location", "string", "Location of the newly created resource")]
         [SwaggerResponseHeader(HttpStatusCode.OK, "ETag", "string", "An ETag of the resource")]
+        [Authorize(Roles = "Administrator", Users = "Matt")]
         public IHttpActionResult GetPerson(PersonRequest personRequest)
         {
             var personResponse = new PersonResponse { Id = 1, Title = Title.Mr, FirstName = "Dave", Age = 32 };

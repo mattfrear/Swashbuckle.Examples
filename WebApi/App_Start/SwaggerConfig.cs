@@ -3,6 +3,9 @@ using WebActivatorEx;
 using WebApi;
 using Swashbuckle.Application;
 using Swashbuckle.Examples;
+using System;
+using System.Reflection;
+using System.IO;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -102,7 +105,12 @@ namespace WebApi
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+
+                        var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                        var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".XML";
+                        var commentsFile = Path.Combine(baseDirectory, "bin", commentsFileName);
+
+                        c.IncludeXmlComments(commentsFile);
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.
@@ -160,6 +168,8 @@ namespace WebApi
                         c.OperationFilter<DescriptionOperationFilter>();
 
                         c.OperationFilter<AddResponseHeadersFilter>();
+
+                        c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 
                         //
                         // If you've defined an OAuth2 flow as described above, you could use a custom filter

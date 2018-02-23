@@ -12,7 +12,7 @@
     <copyright>Copyright 2017</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      - Added SwaggerResponseHeaderAttribute
+      - Added AppendAuthorizeToSummaryOperationFilter
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.2.2" />

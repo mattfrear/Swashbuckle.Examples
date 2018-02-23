@@ -32,9 +32,9 @@ You'll see some more realistic data (or whatever you want):
 
 ![response with awesome data](https://mattfrear.files.wordpress.com/2015/04/response-new.png?w=700&h=358)
 
-## Documenting Response properties
+## Documenting properties
 
-Lets you add a comment-like description to properties on your response, e.g.
+Lets you add a comment-like description to properties on your request and response fields, e.g.
 ![descriptions](https://mattfrear.files.wordpress.com/2017/09/descriptions.jpg)
 
 ## Authorization header input box
@@ -50,6 +50,13 @@ Allows you to specify response headers for any operation
 
 ![response headers](https://user-images.githubusercontent.com/169179/35051682-b8217740-fb9d-11e7-8bec-98d4b088dfa5.png)
 
+## Add Authorization to Summary
+
+If you use the `[Authorize]` attribute  to your controller or to any actions, then (Auth) is added to the action's summary,
+along with any specified users or roles.
+
+![authorization](https://user-images.githubusercontent.com/169179/36601358-d9753220-18ac-11e8-8d53-2368e1d089d2.JPG)
+
 ## Installation
 Install the [NuGet package](https://www.nuget.org/packages/Swashbuckle.Examples/), then enable whichever filters 
 you need when you enable Swagger:
@@ -63,11 +70,14 @@ GlobalConfiguration.Configuration
             // Enable Swagger examples
             c.OperationFilter<ExamplesOperationFilter>();
 
-            // Enable swagger response descriptions
+            // Enable swagger descriptions
             c.OperationFilter<DescriptionOperationFilter>();
 
             // Enable swagger response headers
             c.OperationFilter<AddResponseHeadersFilter>();
+
+			// Add (Auth) to action summary
+			c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
         })
 
 ```
@@ -219,7 +229,7 @@ public async Task<IHttpActionResult> Search(DeliveryOptionsSearchModel search)
 
 That DeliveryOptionsSearchModel object is only defined once in the entire Swagger document and it can only have one **request** example defined.
 
-## How to use - Document response properties
+## How to use - Document properties
 Define the SwaggerResponse, as usual:
 ```
 [HttpPost]
@@ -257,6 +267,19 @@ Specify one or more `[SwaggerResponseHeader]` attributes on your controller acti
 public IHttpActionResult GetPerson(PersonRequest personRequest)
 {
 ```
+
+## How to use - Authorization summary
+Specify `[Authorization]` headers on either a Controller:
+```
+[Authorize]
+public class ValuesController : Controller
+```
+or on an action:
+```
+[Authorize("Customer")]
+public PersonResponse GetPerson([FromBody]PersonRequest personRequest)
+```
+If your `[Authorize]` specifies users `[Authorize(Users = "Customer")]` or roles `[Authorize(Roles = "Customer")]` then they will be added to the Summary too.
 
 ## Pascal case or Camel case?
 The default is camelCase. If you want PascalCase you can pass in a `DefaultContractResolver` like so:

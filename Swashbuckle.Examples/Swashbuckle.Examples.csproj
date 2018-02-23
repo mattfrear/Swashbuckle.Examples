@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppendAuthorizeToSummaryOperationFilter.cs" />
     <Compile Include="AuthorizationInputOperationFilter.cs" />
     <Compile Include="ResponseHeaders\AddResponseHeadersFilter.cs" />
     <Compile Include="ResponseHeaders\SwaggerResponseHeaderAttribute.cs" />
