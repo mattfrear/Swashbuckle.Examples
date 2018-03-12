@@ -10,12 +10,10 @@ namespace Swashbuckle.Examples
     /// This is used for generating Swagger documentation. Should be used in conjuction with SwaggerResponse - will add examples to SwaggerResponse.
     /// See: https://github.com/mattfrear/Swashbuckle.AspNetCore.Examples
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     public class SwaggerResponseExampleAttribute : Attribute
     {
         /// <inheritdoc />
-        /// <summary>
-        /// </summary>
         /// <param name="statusCode">The HTTP status code, e.g. 200</param>
         /// <param name="examplesProviderType">A type that inherits from IExamplesProvider</param>
         /// <param name="contractResolver">An optional json contract Resolver if you want to override the one you use</param>

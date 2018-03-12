@@ -10,6 +10,8 @@ using WebApi.Models.Examples;
 namespace WebApi.Controllers
 {
     [Authorize]
+    [SwaggerResponse(HttpStatusCode.NotFound, "Could not find the person", typeof(ErrorResponse))]
+    [SwaggerResponseExample(HttpStatusCode.NotFound, typeof(NotFoundResponseExample))]
     public class ValuesController : ApiController
     {
         /// <summary>
@@ -24,8 +26,8 @@ namespace WebApi.Controllers
         [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample), jsonConverter: typeof(StringEnumConverter))]
         // [SwaggerResponseExample(HttpStatusCode.OK, typeof(PersonResponseExample), typeof(DefaultContractResolver))]
 
-        [SwaggerResponse(HttpStatusCode.NotFound, "Could not find the person", typeof(ErrorResponse))]
-        [SwaggerResponseExample(HttpStatusCode.NotFound, typeof(NotFoundResponseExample))]
+        //[SwaggerResponse(HttpStatusCode.NotFound, "Could not find the person", typeof(ErrorResponse))]
+        //[SwaggerResponseExample(HttpStatusCode.NotFound, typeof(NotFoundResponseExample))]
 
         [SwaggerResponse(HttpStatusCode.InternalServerError, "There was an unexpected error")]
         [SwaggerResponseExample(HttpStatusCode.InternalServerError, typeof(InternalServerResponseExample))]

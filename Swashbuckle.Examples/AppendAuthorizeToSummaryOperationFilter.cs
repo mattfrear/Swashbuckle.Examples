@@ -22,9 +22,7 @@ namespace Swashbuckle.Examples
                 AppendRoles(authorizeAttributes, authorizationDescription);
                 AppendUsers(authorizeAttributes, authorizationDescription);
 
-                authorizationDescription.Append(")");
-
-                operation.summary += authorizationDescription;
+                operation.summary += authorizationDescription.ToString().TrimEnd(';') + ")";
             }
         }
 
