@@ -5,14 +5,14 @@
     <version>$version$</version>
     <title>Swashbuckle.Examples</title>
     <authors>Matt Frear</authors>
-    <licenseUrl>http://opensource.org/licenses/BSD-3-Clause</licenseUrl>
+    <licenseUrl>https://github.com/mattfrear/Swashbuckle.Examples/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/mattfrear/Swashbuckle.Examples</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Adds the SwaggerRequestExample and SwaggerResponseExample attribute for Swashbuckle. This will populate the example property of a schema object in the output swagger.</description>
     <copyright>Copyright 2017</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      - Allow Response examples to be set on a Controller
+      Consider [AllowAnonymous] on actions when appending Auth to summary
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.2.2" />

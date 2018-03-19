@@ -15,6 +15,11 @@ namespace Swashbuckle.Examples
                 .GetControllerAndActionAttributes<AuthorizeAttribute>()
                 .ToList();
 
+            if (apiDescription.GetControllerAndActionAttributes<AllowAnonymousAttribute>().Any())
+            {
+                return;
+            }
+
             if (authorizeAttributes.Any())
             {
                 var authorizationDescription = new StringBuilder(" (Auth");
