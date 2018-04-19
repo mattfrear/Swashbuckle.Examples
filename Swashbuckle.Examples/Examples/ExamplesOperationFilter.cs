@@ -26,7 +26,7 @@ namespace Swashbuckle.Examples
             {
                 var schema = schemaRegistry.GetOrRegister(attr.RequestType);
 
-                var parameter = operation.parameters.FirstOrDefault(p => p.@in == "body" && (p.schema.@ref == schema.@ref || p.schema.items.@ref == schema.@ref));
+                var parameter = operation.parameters.FirstOrDefault(p => p.@in == "body" && (p.schema?.@ref == schema.@ref || p.schema?.items?.@ref == schema.@ref));
 
                 if (parameter != null)
                 {
