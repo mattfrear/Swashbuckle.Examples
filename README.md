@@ -9,6 +9,15 @@ and: https://mattfrear.com/2015/04/21/generating-swagger-example-responses-with-
 | This library works with [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle), which is what you will want to use if you are using ASP.NET Web API. |
 | If you are using ASP.NET Core , then you will want to use [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore), and if you are using that then you will want to use my .NET Core version of this project,   ~Swashbuckle.AspNetCore.Examples~ [Swashbuckle.AspNetCore.Filters](https://github.com/mattfrear/Swashbuckle.AspNetCore.Filters). |
 
+## Where to get it
+From NuGet.
+
+| Version of Swashbuckle you're using | You'll want this version of this package |
+|-------------------------------------|-----------------------------------------|
+| Swashbuckle 1.0 - 5.5 | https://www.nuget.org/packages/Swashbuckle.Examples/ |
+| Swashbuckle.AspNetCore version 1.0.0 - 2.5.0 | https://www.nuget.org/packages/Swashbuckle.AspNetCore.Examples/ |
+| Swashbuckle.AspNetCore version 3.0 and above | https://www.nuget.org/packages/Swashbuckle.AspNetCore.Filters/ |
+
 ## Request example
 
 Populate swagger's `definitions.YourObject.example` with whatever object you like.
