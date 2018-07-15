@@ -34,15 +34,9 @@ namespace Swashbuckle.Examples
 
                 var response = operation.responses.FirstOrDefault(r => r.Key == statusCode);
 
-                if (response.Equals(default(KeyValuePair<string, Response>)) == false)
+                if (response.Equals(default(KeyValuePair<string, Response>)) == false && response.Value != null)
                 {
-                    if (response.Value != null)
-                    {
-                        if (schemaRegistry.Definitions.ContainsKey(attr.Type.Name))
-                        {
-                            UpdateDescriptions(schemaRegistry, attr.Type, true);
-                        }
-                    }
+                    UpdateDescriptions(schemaRegistry, attr.Type, true);
                 }
             }
         }
@@ -66,7 +60,8 @@ namespace Swashbuckle.Examples
                 return;
             }
 
-            if (!schemaRegistry.Definitions.ContainsKey(type.Name))
+            var schema = FindSchemaForType(schemaRegistry, type);
+            if (schema == null)
             {
                 return;
             }
@@ -77,15 +72,29 @@ namespace Swashbuckle.Examples
                 return;
             }
 
-            var definition = schemaRegistry.Definitions[ResolveDefinitionKey(type)];
             foreach (var propertyInfo in propertiesWithDescription)
             {
-                UpdatePropertyDescription(propertyInfo, definition);
+                UpdatePropertyDescription(propertyInfo, schema);
                 if (recursively)
                 {
                     UpdateDescriptions(schemaRegistry, propertyInfo.PropertyType, true);
                 }
             }
+        }
+
+        private static Schema FindSchemaForType(SchemaRegistry schemaRegistry, Type type)
+        {
+            if (schemaRegistry.Definitions.ContainsKey(type.FriendlyId(false)))
+            {
+                return schemaRegistry.Definitions[type.FriendlyId(false)];
+            }
+
+            if (schemaRegistry.Definitions.ContainsKey(type.FriendlyId(true)))
+            {
+                return schemaRegistry.Definitions[type.FriendlyId(true)];
+            }
+
+            return null;
         }
 
         private static void UpdatePropertyDescription(PropertyInfo prop, Schema schema)

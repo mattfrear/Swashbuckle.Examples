@@ -243,7 +243,7 @@ Define the SwaggerResponse, as usual:
 public PersonResponse GetPerson([FromBody]PersonRequest personRequest)
 {
 ```
-Now add `System.ComponentModel.Description` attributes to your Response object:
+Now add `System.ComponentModel.Description` attributes to your request or response objects:
 ```
 public class PersonResponse
 {
