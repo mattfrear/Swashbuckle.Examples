@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Web.Http.Description;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Swashbuckle.Swagger;
 using Swashbuckle.Swagger.Annotations;
 
@@ -52,7 +51,7 @@ namespace Swashbuckle.Examples
         {
             foreach (var parameterDescription in apiDescription.ParameterDescriptions)
             {
-                UpdateDescriptions(schemaRegistry, parameterDescription.GetType(), true);
+                UpdateDescriptions(schemaRegistry, parameterDescription.ParameterDescriptor.ParameterType, true);
             }
         }
 
