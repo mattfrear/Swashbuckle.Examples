@@ -4,6 +4,11 @@ A simple library which adds the `[SwaggerRequestExample]`, `[SwaggerResponseExam
 Blog articles: https://mattfrear.com/2016/01/25/generating-swagger-example-requests-with-swashbuckle/
 and: https://mattfrear.com/2015/04/21/generating-swagger-example-responses-with-swashbuckle/
 
+| :mega: This is not the ASP.NET Core version |
+|--------------|
+| This library works with [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle), which is what you will want to use if you are using ASP.NET Web API. |
+| If you are using ASP.NET Core , then you will want to use [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore), and if you are using that then you will want to use my .NET Core version of this project,   ~Swashbuckle.AspNetCore.Examples~ [Swashbuckle.AspNetCore.Filters](https://github.com/mattfrear/Swashbuckle.AspNetCore.Filters). |
+
 ## Request example
 
 Populate swagger's `definitions.YourObject.example` with whatever object you like.
