@@ -12,7 +12,7 @@
     <copyright>Copyright 2017</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      Consider [AllowAnonymous] on actions when appending Auth to summary
+      Fix bug #36 where Descriptions are not being set when using UseFullTypeNameInSchemaIds option
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.2.2" />
