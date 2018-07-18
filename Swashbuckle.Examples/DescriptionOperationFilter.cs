@@ -100,10 +100,13 @@ namespace Swashbuckle.Examples
         private static void UpdatePropertyDescription(PropertyInfo prop, Schema schema)
         {
             var propName = GetPropertyName(prop);
-            if (schema.properties.ContainsKey(propName))
+            foreach (var schemaProperty in schema.properties)
             {
-                var descriptionAttribute = (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false).First();
-                schema.properties[propName].description = descriptionAttribute.Description;
+                if (string.Equals(schemaProperty.Key, propName, StringComparison.OrdinalIgnoreCase))
+                {
+                    var descriptionAttribute = (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false).First();
+                    schemaProperty.Value.description = descriptionAttribute.Description;
+                }
             }
         }
 
@@ -121,17 +124,6 @@ namespace Swashbuckle.Examples
             }
 
             return prop.Name;
-        }
-
-        private static string ResolveDefinitionKey(Type type)
-        {
-            return type.FriendlyId(false);
-        }
-
-        private static string ToCamelCase(string value)
-        {
-            // lower case the first letter
-            return value.Substring(0, 1).ToLower() + value.Substring(1);
         }
     }
 }

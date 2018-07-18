@@ -12,7 +12,7 @@
     <copyright>Copyright 2017</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      Fix bug #36 where Descriptions are not being set when using UseFullTypeNameInSchemaIds option
+      Fix bug #37 where Descriptions are not being set when using a CamelCasePropertyNamesContractResolver
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.2.2" />
