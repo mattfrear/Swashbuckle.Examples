@@ -16,7 +16,7 @@ namespace Swashbuckle.Examples
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             SetResponseModelDescriptions(operation, schemaRegistry, apiDescription);
-            SetRequestModelDescriptions(operation, schemaRegistry, apiDescription);
+            SetRequestModelDescriptions(schemaRegistry, apiDescription);
         }
 
         private static void SetResponseModelDescriptions(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
@@ -41,11 +41,14 @@ namespace Swashbuckle.Examples
             }
         }
 
-        private static void SetRequestModelDescriptions(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+        private static void SetRequestModelDescriptions(SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             foreach (var parameterDescription in apiDescription.ParameterDescriptions)
             {
-                UpdateDescriptions(schemaRegistry, parameterDescription.ParameterDescriptor.ParameterType, true);
+                if (parameterDescription.ParameterDescriptor?.ParameterType != null)
+                {
+                    UpdateDescriptions(schemaRegistry, parameterDescription.ParameterDescriptor.ParameterType, true);
+                }
             }
         }
 
