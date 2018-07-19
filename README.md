@@ -219,7 +219,8 @@ Note that this differs from the Request example in that the mime type is a requi
 
 ### Known issues
 - Although you can add a response examples for each HTTP status code (200, 201, 400, 404 etc), and they will all appear in the
-swagger.json, **only one example for responses will display on the swagger-ui page**. This is due to a bug in swagger-ui. [Issue 9](https://github.com/mattfrear/Swashbuckle.AspNetCore.Examples/issues/9) You may want to use Swashbuckle's  `[SwaggerResponseRemoveDefaults]` attribute to remove 200 from your list of response codes, if for example your API returns 201s and not 200s [Issue 26](https://github.com/mattfrear/Swashbuckle.AspNetCore.Examples/issues/26)
+swagger.json, **only one example for responses will display on the swagger-ui page**. This is due to a bug in swagger-ui. [Issue 9](https://github.com/mattfrear/Swashbuckle.AspNetCore.Examples/issues/9) You may want to use Swashbuckle's  `[SwaggerResponseRemoveDefaults]` attribute to remove 200 from your list of response codes, if for example your API returns 201s and not 200s [Issue 26](https://github.com/mattfrear/Swashbuckle.AspNetCore.Examples/issues/26).
+N.B. this issue is fixed in Swashbuckle.AspNetCore.
 
 - The response example is displayed wrapped in a JSON object which has the media type, i.e. "application/json" as the key, and the example as the value. 
 [Issue 8](https://github.com/mattfrear/Swashbuckle.Examples/issues/8) Our response example is correct as per the Swagger spec, so I'm not sure 

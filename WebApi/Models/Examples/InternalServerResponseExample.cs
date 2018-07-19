@@ -6,7 +6,7 @@ namespace WebApi.Models.Examples
     {
         public object GetExamples()
         {
-            return new ErrorResponse { ErrorCode = 500 };
+            return new ErrorResponse { ErrorCode = 500, Message = "An unexpected error occurred" };
         }
     }
 }
