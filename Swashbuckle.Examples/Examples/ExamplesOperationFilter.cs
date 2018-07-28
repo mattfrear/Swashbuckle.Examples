@@ -135,6 +135,7 @@ namespace Swashbuckle.Examples
                 ContractResolver = controllerSerializerSettings.ContractResolver,
                 Culture = controllerSerializerSettings.Culture,
                 DateFormatHandling = controllerSerializerSettings.DateFormatHandling,
+                DateFormatString = controllerSerializerSettings.DateFormatString,
                 DateParseHandling = controllerSerializerSettings.DateParseHandling,
                 DateTimeZoneHandling = controllerSerializerSettings.DateTimeZoneHandling,
                 DefaultValueHandling = controllerSerializerSettings.DefaultValueHandling,
