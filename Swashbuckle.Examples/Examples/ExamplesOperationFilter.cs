@@ -30,7 +30,7 @@ namespace Swashbuckle.Examples
 
                 if (parameter != null)
                 {
-                    var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter);
+                    var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter, ignoreNulls: true);
 
                     var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
@@ -71,7 +71,7 @@ namespace Swashbuckle.Examples
                     {
                         var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
 
-                        var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter);
+                        var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter, ignoreNulls: false);
                         response.Value.examples = FormatJson(provider, serializerSettings, true);
                     }
                 }
@@ -100,14 +100,18 @@ namespace Swashbuckle.Examples
             return result;
         }
 
-        private static JsonSerializerSettings SerializerSettings(JsonSerializerSettings controllerSerializerSettings, IContractResolver attributeContractResolver, JsonConverter attributeJsonConverter)
+        private static JsonSerializerSettings SerializerSettings(JsonSerializerSettings controllerSerializerSettings, IContractResolver attributeContractResolver, JsonConverter attributeJsonConverter, bool ignoreNulls)
         {
             var serializerSettings = DuplicateSerializerSettings(controllerSerializerSettings);
             if (attributeContractResolver != null)
             {
                 serializerSettings.ContractResolver = attributeContractResolver;
             }
-            serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any RequestExample properies because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
+
+            if (ignoreNulls)
+            {
+                serializerSettings.NullValueHandling = NullValueHandling.Ignore; // ignore nulls on any RequestExample properies because swagger does not support null objects https://github.com/OAI/OpenAPI-Specification/issues/229
+            }
 
             if (attributeJsonConverter != null)
             {

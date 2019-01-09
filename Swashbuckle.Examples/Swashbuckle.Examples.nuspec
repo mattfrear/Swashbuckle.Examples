@@ -5,14 +5,14 @@
     <version>$version$</version>
     <title>Swashbuckle.Examples</title>
     <authors>Matt Frear</authors>
-    <licenseUrl>https://github.com/mattfrear/Swashbuckle.Examples/blob/master/LICENSE</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://github.com/mattfrear/Swashbuckle.Examples</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Adds the SwaggerRequestExample and SwaggerResponseExample attribute for Swashbuckle. This will populate the example property of a schema object in the output swagger.</description>
-    <copyright>Copyright 2017</copyright>
+    <copyright>Copyright 2019</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      Upgrade to Swashbuckle.Core 5.6.0
+      No longer hide null properties in response objects. Fix issue #42.
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.6.0" />
