@@ -69,5 +69,37 @@ namespace WebApi.Controllers
             var people = new[] { new PersonResponse { Id = 1, FirstName = "Sally" } };
             return Ok(people);
         }
+
+        /// <summary>
+        /// Gets dynamic data passing a Dictionary of string, object and returns a Dictionary
+        /// </summary>
+        /// <param name="dynamicDictionary"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/values/dictionary")]
+        [SwaggerResponse(200, type: typeof(Dictionary<string, object>), description: "Successfully found the data")]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(DictionaryResponseExample))]
+        [SwaggerRequestExample(typeof(Dictionary<string, object>), typeof(DictionaryRequestExample), jsonConverter: typeof(StringEnumConverter))]
+        public Dictionary<string, object> PostDictionary([FromBody]Dictionary<string, object> dynamicDictionary)
+        {
+            return new Dictionary<string, object> { { "Some", 1 } };
+        }
+
+        /// <summary>
+        /// Gets dynamic data passing a DynamicData and returning a DynamicData
+        /// </summary>
+        /// <param name="personRequest"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/values/data")]
+        [SwaggerResponse(200, type: typeof(DynamicData), description: "Successfully found the data")]
+        [SwaggerResponseExample(HttpStatusCode.OK, typeof(DynamicDataResponseExample))]
+        [SwaggerRequestExample(typeof(DynamicData), typeof(DynamicDataRequestExample), jsonConverter: typeof(StringEnumConverter))]
+        public DynamicData GetData([FromBody]DynamicData personRequest)
+        {
+            var personResponse = new DynamicData();
+            personResponse.Payload.Add("Property", "val");
+            return personResponse;
+        }
     }
 }

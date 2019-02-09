@@ -33,24 +33,55 @@ namespace Swashbuckle.Examples
                     var serializerSettings = SerializerSettings(controllerSerializerSettings, attr.ContractResolver, attr.JsonConverter, ignoreNulls: true);
 
                     var provider = (IExamplesProvider)Activator.CreateInstance(attr.ExamplesProviderType);
+                    var name = GetSchemaDefinitionName(attr.RequestType, schema);
 
-                    // name = attr.RequestType.Name; // this doesn't work for generic types, so need to to schema.ref split
-
-                    var parts = schema.@ref?.Split('/');
-                    if (parts == null)
+                    if (string.IsNullOrEmpty(name))
                     {
-                        continue;
+                        return;
                     }
 
-                    var name = parts.Last();
-                    
+                    // set the example on the object in the schema registry (this is what swagger-ui will display)
                     if (schemaRegistry.Definitions.ContainsKey(name))
                     {
                         var definitionToUpdate = schemaRegistry.Definitions[name];
                         definitionToUpdate.example = FormatJson(provider, serializerSettings, false);
                     }
+                    else
+                    {
+                        // set example on the request paths/parameters/schema/example property
+                        parameter.schema.example = FormatJson(provider, serializerSettings, false);
+                    }
                 }
             }
+        }
+
+        private static string GetSchemaDefinitionName(Type requestType, Schema schema)
+        {
+            string name = null;
+            // var name = attr.RequestType.Name; // this doesn't work for generic types, so need to to schema.ref split
+            var parts = schema.@ref?.Split('/');
+
+            if (parts != null)
+            {
+                name = parts.Last();
+            }
+            else
+            {
+                // schema.Ref can be null for some types, so we have to try get it by attr.RequestType.Name
+                if (requestType.IsGenericType)
+                {
+                    // remove `# from the generic type name
+                    var friendlyName = requestType.Name.Remove(requestType.Name.IndexOf('`'));
+                    // for generic, Schema will be TypeName[GenericTypeName]
+                    name = $"{friendlyName}[{string.Join(",", requestType.GetGenericArguments().Select(a => a.Name).ToList())}]";
+                }
+                else
+                {
+                    name = requestType.Name;
+                }
+            }
+
+            return name;
         }
 
         private static void SetResponseModelExamples(Operation operation, ApiDescription apiDescription)

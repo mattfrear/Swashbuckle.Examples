@@ -186,6 +186,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Models\DynamicData.cs" />
+    <Compile Include="Models\Examples\DictionaryRequestExample.cs" />
+    <Compile Include="Models\Examples\DictionaryResponseExample.cs" />
+    <Compile Include="Models\Examples\DynamicDataRequestExample.cs" />
+    <Compile Include="Models\Examples\DynamicDataResponseExample.cs" />
     <Compile Include="Models\Examples\NotFoundResponseExample.cs" />
     <Compile Include="Models\Examples\ListPeopleRequestExample.cs" />
     <Compile Include="Models\Examples\WrappedPersonRequestExample.cs" />
