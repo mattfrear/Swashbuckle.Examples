@@ -12,7 +12,7 @@
     <copyright>Copyright 2019</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      No longer hide null properties in response objects. Fix issue #42.
+      Support examples from Dictionary and dynamic data (PR #43)
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.6.0" />
