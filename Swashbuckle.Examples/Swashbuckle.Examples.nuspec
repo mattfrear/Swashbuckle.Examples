@@ -5,7 +5,7 @@
     <version>$version$</version>
     <title>Swashbuckle.Examples</title>
     <authors>Matt Frear</authors>
-    <license type="expression">MIT</license>
+    <licenseUrl>https://github.com/mattfrear/Swashbuckle.Examples/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/mattfrear/Swashbuckle.Examples</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Adds the SwaggerRequestExample and SwaggerResponseExample attribute for Swashbuckle. This will populate the example property of a schema object in the output swagger.</description>
