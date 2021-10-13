@@ -36,7 +36,7 @@ namespace Swashbuckle.Examples
 
                 if (response.Equals(default(KeyValuePair<string, Response>)) == false && response.Value != null)
                 {
-                    UpdateDescriptions(schemaRegistry, attr.Type, true);
+                    UpdateDescriptions(schemaRegistry, attr.Type);
                 }
             }
         }
@@ -47,18 +47,25 @@ namespace Swashbuckle.Examples
             {
                 if (parameterDescription.ParameterDescriptor?.ParameterType != null)
                 {
-                    UpdateDescriptions(schemaRegistry, parameterDescription.ParameterDescriptor.ParameterType, true);
+                    UpdateDescriptions(schemaRegistry, parameterDescription.ParameterDescriptor.ParameterType);
                 }
             }
         }
+        
+        private static void UpdateDescriptions(SchemaRegistry schemaRegistry, Type type)
+        {
+            var visitedSchemas = new HashSet<Schema>();
 
-        private static void UpdateDescriptions(SchemaRegistry schemaRegistry, Type type, bool recursively = false)
+            UpdateDescriptions(schemaRegistry, type, visitedSchemas, true);
+        }
+
+        private static void UpdateDescriptions(SchemaRegistry schemaRegistry, Type type, HashSet<Schema> visitedSchemas, bool recursively = false)
         {
             if (type.IsGenericType)
             {
                 foreach (var genericArgumentType in type.GetGenericArguments())
                 {
-                    UpdateDescriptions(schemaRegistry, genericArgumentType, true);
+                    UpdateDescriptions(schemaRegistry, genericArgumentType, visitedSchemas, true);
                 }
                 return;
             }
@@ -68,6 +75,13 @@ namespace Swashbuckle.Examples
             {
                 return;
             }
+            
+            if (visitedSchemas.Contains(schema))
+            {
+                return;
+            }
+
+            visitedSchemas.Add(schema);
 
             var propertiesWithDescription = type.GetProperties().Where(prop => prop.IsDefined(typeof(DescriptionAttribute), false)).ToList();
             if (!propertiesWithDescription.Any())
@@ -80,7 +94,7 @@ namespace Swashbuckle.Examples
                 UpdatePropertyDescription(propertyInfo, schema);
                 if (recursively)
                 {
-                    UpdateDescriptions(schemaRegistry, propertyInfo.PropertyType, true);
+                    UpdateDescriptions(schemaRegistry, propertyInfo.PropertyType, visitedSchemas, true);
                 }
             }
         }
