@@ -1,5 +1,6 @@
 # Swashbuckle.Examples
-A simple library which adds the `[SwaggerRequestExample]`, `[SwaggerResponseExample]` attributes to [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle). Can also add read the `[Description]` attributes off your Response objects, and can also add an input box for entering an Authorization header.
+A simple library which adds the `[SwaggerRequestExample]`, `[SwaggerResponseExample]` attributes to [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle).
+Can also add an input box for entering an Authorization header.
 
 Blog articles: https://mattfrear.com/2016/01/25/generating-swagger-example-requests-with-swashbuckle/
 and: https://mattfrear.com/2015/04/21/generating-swagger-example-responses-with-swashbuckle/
@@ -46,7 +47,7 @@ You'll see some more realistic data (or whatever you want):
 
 ![response with awesome data](https://mattfrear.files.wordpress.com/2015/04/response-new.png?w=700&h=358)
 
-## Documenting properties
+## ~~Documenting properties~~
 
 ~~Lets you add a comment-like description to properties on your request and response fields, e.g.~~
 ![descriptions](https://mattfrear.files.wordpress.com/2017/09/descriptions.jpg)
