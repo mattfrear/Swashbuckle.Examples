@@ -11,7 +11,6 @@ namespace WebApi.Models
         /// </summary>
         public int Age { get; set; }
 
-        [Description("The first name of the person")]
         public string FirstName { get; set; }
 
         public decimal? Income { get; set; }

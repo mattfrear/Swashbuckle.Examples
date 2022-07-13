@@ -164,9 +164,6 @@ namespace WebApi
                         // Enable Swagger examples
                         c.OperationFilter<ExamplesOperationFilter>();
 
-                        // Enable swagger response descriptions
-                        c.OperationFilter<DescriptionOperationFilter>();
-
                         c.OperationFilter<AddResponseHeadersFilter>();
 
                         c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();

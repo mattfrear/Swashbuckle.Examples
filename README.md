@@ -48,8 +48,11 @@ You'll see some more realistic data (or whatever you want):
 
 ## Documenting properties
 
-Lets you add a comment-like description to properties on your request and response fields, e.g.
+~~Lets you add a comment-like description to properties on your request and response fields, e.g.~~
 ![descriptions](https://mattfrear.files.wordpress.com/2017/09/descriptions.jpg)
+
+The `DescriptionOperationFilter` was removed from Swashbuckle.Examples 4.0 in 2022. You can do the same thing using Swashbuckle's XML comments.
+See here: https://github.com/mattfrear/Swashbuckle.Examples/pull/59#issuecomment-1087853075 
 
 ## Authorization header input box
 
@@ -83,9 +86,6 @@ GlobalConfiguration.Configuration
 
             // Enable Swagger examples
             c.OperationFilter<ExamplesOperationFilter>();
-
-            // Enable swagger descriptions
-            c.OperationFilter<DescriptionOperationFilter>();
 
             // Enable swagger response headers
             c.OperationFilter<AddResponseHeadersFilter>();
@@ -243,30 +243,6 @@ public async Task<IHttpActionResult> Search(DeliveryOptionsSearchModel search)
 ```
 
 That DeliveryOptionsSearchModel object is only defined once in the entire Swagger document and it can only have one **request** example defined.
-
-## How to use - Document properties
-Define the SwaggerResponse, as usual:
-```
-[HttpPost]
-[Route("api/values/person")]
-[SwaggerResponse(200, typeof(PersonResponse), "Successfully found the person")]
-public PersonResponse GetPerson([FromBody]PersonRequest personRequest)
-{
-```
-Now add `System.ComponentModel.Description` attributes to your request or response objects:
-```
-public class PersonResponse
-{
-	public int Id { get; set; }
-
-	[Description("The first name of the person")]
-	public string FirstName { get; set; }
-
-	public string LastName { get; set; }
-
-	[Description("His age, in years")]
-	public int Age { get; set; }
-```
 
 ## How to use - Authorization input
 

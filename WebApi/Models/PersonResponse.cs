@@ -14,22 +14,17 @@ namespace WebApi.Models
         public Title Title { get; set; }
 
         [DataMember(Name = "first")]
-        [Description("The first name of the person")]
         public string FirstName { get; set; }
 
         [JsonProperty("last")]
-        [Description("The last name of the person")]
         public string LastName { get; set; }
 
         [DataMember]
-        [Description("His age, in years")]
         public int Age { get; set; }
 
         [DataMember]
-        [Description("His income, in dollars, if known. If unknown then null")]
         public decimal? Income { get; set; }
 
-        [Description("Not a data member. This must be hidden in data contract")]
         public string InternalNeedsOnly => "For internal needs only. Should not be exposed in Swagger UI anywhere";
     }
 }
