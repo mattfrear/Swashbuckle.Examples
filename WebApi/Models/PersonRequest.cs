@@ -6,6 +6,9 @@ namespace WebApi.Models
     {
         public Title Title { get; set; }
 
+        /// <summary>
+        /// Their age, in years
+        /// </summary>
         public int Age { get; set; }
 
         [Description("The first name of the person")]

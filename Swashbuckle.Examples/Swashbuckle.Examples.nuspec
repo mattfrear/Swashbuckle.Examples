@@ -12,7 +12,7 @@
     <copyright>Copyright 2019</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      Support examples from Dictionary and dynamic data (PR #43)
+      Upgrade to Newtonsoft.Json v13
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.6.0" />
