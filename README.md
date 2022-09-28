@@ -62,7 +62,14 @@ authentication. e.g.
 
 ![authorization](https://mattfrear.files.wordpress.com/2017/09/authorization.jpg)
 
-## Add a response header (new!)
+## Add a request header (new!)
+
+Allows you to specify request headers for any operation
+
+![request headers](https://user-images.githubusercontent.com/169179/192666416-3165b9cf-ddcd-422c-9498-8fe475cd60e9.png)
+
+
+## Add a response header
 
 Allows you to specify response headers for any operation
 
@@ -93,6 +100,9 @@ GlobalConfiguration.Configuration
 
 			// Add (Auth) to action summary
 			c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+
+            // Adds request headers to actions that have the [SwaggerRequestHeader] attribute
+            c.OperationFilter<RequestHeaderFilter>();
         })
 
 ```
@@ -250,10 +260,19 @@ That DeliveryOptionsSearchModel object is only defined once in the entire Swagge
 Just enable the `AuthorizationInputOperationFilter` as described in the Installation section above. Note this this will add an
 Authorization input to EVERY endpoint, regardless of if the endpoint is actually secured.
 
+## How to use - Request headers
+
+Specify one or more `[SwaggerRequestHeader]` attributes on your controller action, like so:
+```csharp
+[SwaggerRequestHeader("Blah", isRequired: true)]
+public IHttpActionResult GetPerson(PersonRequest personRequest)
+
+```
+
 ## How to use - Response headers
 
 Specify one or more `[SwaggerResponseHeader]` attributes on your controller action, like so:
-```
+```csharp
 [SwaggerResponseHeader(HttpStatusCode.OK, "Location", "string", "Location of the newly created resource")]
 [SwaggerResponseHeader(HttpStatusCode.OK, "ETag", "string", "An ETag of the resource")]
 public IHttpActionResult GetPerson(PersonRequest personRequest)

@@ -66,6 +66,8 @@
   <ItemGroup>
     <Compile Include="AppendAuthorizeToSummaryOperationFilter.cs" />
     <Compile Include="AuthorizationInputOperationFilter.cs" />
+    <Compile Include="RequestHeaders\RequestHeaderFilter.cs" />
+    <Compile Include="RequestHeaders\SwaggerRequestHeaderAttribute.cs" />
     <Compile Include="ResponseHeaders\AddResponseHeadersFilter.cs" />
     <Compile Include="ResponseHeaders\SwaggerResponseHeaderAttribute.cs" />
     <Compile Include="Examples\ExamplesOperationFilter.cs" />

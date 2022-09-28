@@ -37,6 +37,7 @@ namespace WebApi.Controllers
         [SwaggerResponseHeader(HttpStatusCode.OK, "Location", "string", "Location of the newly created resource")]
         [SwaggerResponseHeader(HttpStatusCode.OK, "ETag", "string", "An ETag of the resource")]
         [Authorize(Roles = "Administrator", Users = "Matt")]
+        [SwaggerRequestHeader("Blah", isRequired: true)]
         public IHttpActionResult GetPerson(PersonRequest personRequest)
         {
             var personResponse = new PersonResponse { Id = 1, Title = Title.Mr, FirstName = "Dave", Age = 32 };

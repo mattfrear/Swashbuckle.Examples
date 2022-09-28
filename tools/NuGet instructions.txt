@@ -1,6 +1,7 @@
 1. Increment the version number in the AssemblyInfo.cs,build solution.
 2. Update version and releaseNotes section in the .nuspec file
-3. nuget pack Swashbuckle.Examples.csproj
-4. nuget push Swashbuckle.Examples.1.2.0.nupkg MySecretNuGetApiKeyHere -Source https://www.nuget.org/api/v2/package
-5. git tag -a 1.2.5 -m 'Published 1.2.5 to nuget.org'
-6. git push --follow-tags
+3. Commit all changes
+4. nuget pack Swashbuckle.Examples.csproj
+5. nuget push Swashbuckle.Examples.1.2.0.nupkg MySecretNuGetApiKeyHere -Source https://www.nuget.org/api/v2/package
+6. git tag -a 1.2.5 -m 'Published 1.2.5 to nuget.org'
+7. git push --follow-tags

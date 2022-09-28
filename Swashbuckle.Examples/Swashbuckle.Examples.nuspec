@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Swashbuckle.Examples</id>
-    <version>4.0.0</version>
+    <version>4.1.0</version>
     <title>Swashbuckle.Examples</title>
     <authors>Matt Frear</authors>
     <licenseUrl>https://github.com/mattfrear/Swashbuckle.Examples/blob/master/LICENSE</licenseUrl>
@@ -12,7 +12,7 @@
     <copyright>Copyright 2019</copyright>
     <tags>Swagger SwaggerUi Documentation Discovery AspNetWebApi Swashbuckle</tags>
     <releaseNotes>
-      Upgrade to Newtonsoft.Json v13
+        Adds request headers to actions that have the [RequestHeader] attribute.
     </releaseNotes>
     <dependencies>
       <dependency id="Swashbuckle.Core" version="5.6.0" />
